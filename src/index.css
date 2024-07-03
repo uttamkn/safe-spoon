@@ -4,8 +4,3 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@font-face {
-  font-family: "Bento";
-  src: url(/fonts/Bento-2OXaW.otf);
-}

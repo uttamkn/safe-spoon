@@ -13,6 +13,7 @@ const SignUp: React.FC<SignUpProps> = ({ switchToSignIn }) => {
     username: "",
     password: "",
     confirm_password: "",
+    allergies: "",
   });
   const [error, setError] = useState<string>("");
 
@@ -35,7 +36,12 @@ const SignUp: React.FC<SignUpProps> = ({ switchToSignIn }) => {
       await axios.put("/auth/sign_up", formData);
 
       // Success
-      setFormData({ username: "", password: "", confirm_password: "" });
+      setFormData({
+        username: "",
+        password: "",
+        confirm_password: "",
+        allergies: "",
+      });
       toast.success("User created successfully");
       switchToSignIn();
     } catch (error) {
@@ -54,8 +60,7 @@ const SignUp: React.FC<SignUpProps> = ({ switchToSignIn }) => {
   return (
     <div className="w-96 flex flex-col pl-10 pt-10 pr-10 pb-3 justify-center bg-secondary gap-5 rounded-md border border-primary shadow-md text-primary">
       <h1 className="font-heading2 font-bold text-4xl mb-2 text-primary cursor-default">
-        {" "}
-        Register Now{" "}
+        Register Now
       </h1>
 
       <form className="flex flex-col gap-5 w-full" onSubmit={handleSubmit}>
@@ -67,7 +72,16 @@ const SignUp: React.FC<SignUpProps> = ({ switchToSignIn }) => {
           value={formData.username}
           onChange={handleChange}
           required={true}
-        ></Input>
+        />
+
+        <Input
+          label="Allergies"
+          type="text"
+          name="allergies"
+          placeholder="e.g., peanuts, gluten"
+          value={formData.allergies}
+          onChange={handleChange}
+        />
 
         <Input
           label="Password"
@@ -77,7 +91,7 @@ const SignUp: React.FC<SignUpProps> = ({ switchToSignIn }) => {
           value={formData.password}
           onChange={handleChange}
           required={true}
-        ></Input>
+        />
 
         <Input
           label="Confirm Password"
@@ -87,7 +101,7 @@ const SignUp: React.FC<SignUpProps> = ({ switchToSignIn }) => {
           value={formData.confirm_password}
           onChange={handleChange}
           required={true}
-        ></Input>
+        />
 
         {error && <div className="text-center text-red-600">*{error}*</div>}
         <div className="w-100 text-center text-sm italic font-light text-primary cursor-default">
@@ -109,4 +123,5 @@ const SignUp: React.FC<SignUpProps> = ({ switchToSignIn }) => {
     </div>
   );
 };
+
 export default SignUp;

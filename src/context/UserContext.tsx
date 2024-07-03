@@ -1,31 +1,53 @@
 import { createContext, useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { getToken } from "../api/utils";
+import { User } from "../types.ts";
 
-const UserContext = createContext<any>({});
+const UserContext = createContext<any>({
+  user: { id: 0, username: "" },
+  loading: true,
+  updateUser: () => {},
+});
 
 export function UserContextProvider({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<User>({ id: 0, username: "" });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!user) {
-      axios
-        .get("/auth/user", {
-          headers: {
-            Authorization: `Bearer ${getToken()}`,
-          },
-        })
-        .then(({ data }: { data: any }) => {
-          setUser(data);
-        })
-        .catch(() => setUser(null))
-        .finally(() => setLoading(false));
-    }
+    const fetchUserData = async () => {
+      try {
+        const token = getToken();
+        if (token) {
+          const response = await axios.get("/auth/user", {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          if (
+            response.data &&
+            typeof response.data === "object" &&
+            !Array.isArray(response.data)
+          ) {
+            setUser(response.data);
+          } else {
+            throw new Error("Unexpected data format received");
+          }
+        } else {
+          throw new Error("Token not available");
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+        setUser({ id: 0, username: "" });
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUserData();
   }, []);
 
   const updateUser = (userData: any) => {
