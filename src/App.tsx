@@ -30,8 +30,10 @@ const App: React.FC = () => {
   ]);
   return (
     <UserContextProvider>
-      <Toaster position="top-center" toastOptions={{ duration: 2000 }} />
-      <RouterProvider router={router} />
+      <div>
+        <Toaster position="top-center" toastOptions={{ duration: 2000 }} />
+        <RouterProvider router={router} />
+      </div>
     </UserContextProvider>
   );
 };

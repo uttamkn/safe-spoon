@@ -13,14 +13,19 @@ const SignUp: React.FC<SignUpProps> = ({ switchToSignIn }) => {
     username: "",
     password: "",
     confirm_password: "",
-    allergies: "",
+    allergies: [],
   });
   const [error, setError] = useState<string>("");
 
   const handleChange = ({
     target: { name, value },
   }: ChangeEvent<HTMLInputElement>) => {
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    if (name === "allergies") {
+      const allergiesArray = value.split(",").map((allergy) => allergy.trim());
+      setFormData((prev) => ({ ...prev, [name]: allergiesArray }));
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -32,15 +37,18 @@ const SignUp: React.FC<SignUpProps> = ({ switchToSignIn }) => {
       setError("");
     }
 
+    const { confirm_password, ...data } = formData;
+    console.log(data);
+
     try {
-      await axios.put("/auth/sign_up", formData);
+      await axios.put("/auth/sign_up", data);
 
       // Success
       setFormData({
         username: "",
         password: "",
         confirm_password: "",
-        allergies: "",
+        allergies: [],
       });
       toast.success("User created successfully");
       switchToSignIn();
@@ -79,7 +87,7 @@ const SignUp: React.FC<SignUpProps> = ({ switchToSignIn }) => {
           type="text"
           name="allergies"
           placeholder="e.g., peanuts, gluten"
-          value={formData.allergies}
+          value={formData.allergies.join(", ")}
           onChange={handleChange}
         />
 
@@ -88,6 +96,7 @@ const SignUp: React.FC<SignUpProps> = ({ switchToSignIn }) => {
           type="password"
           name="password"
           placeholder="Must be at least 8 characters long"
+          pattern=".{8,}"
           value={formData.password}
           onChange={handleChange}
           required={true}
