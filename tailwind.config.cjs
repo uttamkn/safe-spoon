@@ -6,9 +6,11 @@ module.exports = {
       colors: {
         primary: "#000000",
         secondary: "#ffffff",
-        
-
         ternery: "#007713",
+      },
+      backgroundImage: {
+        'about-image': "url('/src/assets/images/About_bg.jpg')",
+        'signin-image':"url('/src/assets/images/signin_bg.png')",
       },
       fontFamily: {
         heading: ["Bricolage Grotesque"],
