@@ -17,6 +17,10 @@ const Navbar: React.FC = () => {
     navigate("/");
   };
 
+  const handleNavigateToProfile = () => {
+    navigate("/profile");
+  };
+
   return (
     <div className="flex justify-between items-center p-4 text-primary shadow-md bg-secondary w-screen">
       <div>
@@ -25,6 +29,9 @@ const Navbar: React.FC = () => {
         </button>
       </div>
       <div className="flex space-x-4">
+        <button onClick={handleNavigateToProfile} className="text-primary">
+          Profile
+        </button>
         <button
           onClick={handleNavigateToAbout}
           className="text-white bg-ternery px-4 py-2 rounded-md "
