@@ -34,7 +34,7 @@ const ImageInputOpts: React.FC<ImageInputOptsProps> = ({ setImage }) => {
     <div className="flex flex-col items-center">
       <div
         {...getRootProps()}
-        className="p-4 border-2 border-dashed border-ternery rounded-md cursor-pointer mb-4"
+        className="py-32 px-4 border-2 border-dashed border-ternery rounded-md cursor-pointer mb-4"
       >
         <input {...getInputProps()} />
         <p>Drag and drop an image here, or click to select one</p>
