@@ -5,6 +5,7 @@ import Navbar from "../components/Navbar";
 import toast from "react-hot-toast";
 import ImageInputOpts from "../components/ImageInputOpts";
 import axios from "axios";
+import { parseString } from "../api/utils";
 
 const Home: React.FC = () => {
   const [image, setImage] = useState<string>("");
@@ -38,7 +39,7 @@ const Home: React.FC = () => {
         image,
       });
 
-      setReport(JSON.stringify(response.data, null, 2));
+      setReport(response.data[0]);
       toast.dismiss();
       toast.success("Image processed successfully!");
     } catch (error) {
@@ -64,8 +65,16 @@ const Home: React.FC = () => {
           </div>
         </div>
         <div className="w-2/3 p-4">
-          <h2>Report</h2>
-          <pre>{report}</pre>
+          <h1 className="text-3xl font-extrabold w-full mb-5">Report</h1>
+          <div className="text-lg">
+            {
+              <ul>
+                {parseString(report).map((sentence, index) => (
+                  <li key={index}>{sentence}</li>
+                ))}
+              </ul>
+            }
+          </div>
         </div>
       </div>
     </div>
