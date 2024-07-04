@@ -6,9 +6,9 @@ module.exports = {
       colors: {
         primary: "#000000",
         secondary: "#ffffff",
-        combination:"#122A2C",
-        c2:"#F3DDCC"
+        
 
+        ternery: "#007713",
       },
       fontFamily: {
         heading: ["Bricolage Grotesque"],
