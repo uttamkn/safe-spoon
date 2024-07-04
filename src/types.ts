@@ -2,7 +2,10 @@ export type User = {
   id: number;
   username: string;
   allergies: string[];
-  
+  gender: string;
+  age: string;
+  weight: string;
+  anyDiseases: string;
 };
 
 export type UserSignIn = {
@@ -18,5 +21,5 @@ export type UserSignUp = {
   gender: string;
   age: string;
   weight: string;
-  anyDiseases:string;
+  anyDiseases: string;
 };

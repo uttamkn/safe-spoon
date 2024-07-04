@@ -4,7 +4,15 @@ import { getToken } from "../api/utils";
 import { User } from "../types.ts";
 
 const UserContext = createContext<any>({
-  user: { id: 0, username: "", allergies: [] },
+  user: {
+    id: 0,
+    username: "",
+    allergies: [],
+    gender: "",
+    age: "",
+    anyDiseases: "",
+    weight: "",
+  },
   loading: true,
   updateUser: () => {},
 });
@@ -18,6 +26,10 @@ export function UserContextProvider({
     id: 0,
     username: "",
     allergies: [],
+    gender: "",
+    age: "",
+    anyDiseases: "",
+    weight: "",
   });
   const [loading, setLoading] = useState(true);
 
@@ -36,7 +48,6 @@ export function UserContextProvider({
             typeof response.data === "object" &&
             !Array.isArray(response.data)
           ) {
-            console.log("User data:", response.data);
             setUser(response.data);
           } else {
             throw new Error("Unexpected data format received");
@@ -46,7 +57,15 @@ export function UserContextProvider({
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
-        setUser({ id: 0, username: "", allergies: [] });
+        setUser({
+          id: 0,
+          username: "",
+          allergies: [],
+          age: "",
+          anyDiseases: "",
+          gender: "",
+          weight: "",
+        });
       } finally {
         setLoading(false);
       }

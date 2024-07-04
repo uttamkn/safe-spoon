@@ -37,6 +37,7 @@ const Home: React.FC = () => {
     try {
       const response = await axios.post("/image-processing/process_image", {
         image,
+        username: user.username,
       });
 
       setReport(response.data[0]);
