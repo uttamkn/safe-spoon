@@ -7,10 +7,10 @@ import ImageInputOpts from "../components/ImageInputOpts";
 import axios from "axios";
 
 const Home: React.FC = () => {
-  const { user, loading } = useAuth();
   const [image, setImage] = useState<string>("");
   const [report, setReport] = useState<string>("");
   const navigate = useNavigate();
+  const { user, loading } = useAuth();
 
   useEffect(() => {
     if (loading) {
@@ -34,12 +34,9 @@ const Home: React.FC = () => {
 
     toast.loading("Processing image...");
     try {
-      const response = await axios.post(
-        "/image-processing/process_image",
-        {
-          image,
-        }
-      );
+      const response = await axios.post("/image-processing/process_image", {
+        image,
+      });
 
       setReport(JSON.stringify(response.data, null, 2));
       toast.dismiss();
@@ -55,16 +52,18 @@ const Home: React.FC = () => {
     <div className="h-screen">
       <Navbar />
       <div className="flex h-full">
-        <div className="w-1/3">
-          <ImageInputOpts setImage={setImage} />
-          <button
-            onClick={handleImageSubmit}
-            className="mt-4 p-2 bg-blue-500 text-white"
-          >
-            Submit Image
-          </button>
+        <div className="w-1/3 border-r p-5">
+          <div className="flex flex-col gap-5">
+            <ImageInputOpts setImage={setImage} />
+            <button
+              onClick={handleImageSubmit}
+              className="p-2 bg-ternery text-white rounded-md w-40 m-auto"
+            >
+              Submit Image
+            </button>
+          </div>
         </div>
-        <div className="w-2/3 bg-slate-500 p-4">
+        <div className="w-2/3 p-4">
           <h2>Report</h2>
           <pre>{report}</pre>
         </div>
