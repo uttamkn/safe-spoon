@@ -35,7 +35,7 @@ const Home: React.FC = () => {
     toast.loading("Processing image...");
     try {
       const response = await axios.post(
-        "http://localhost:3000/image_processing/process_image",
+        "/image-processing/process_image",
         {
           image,
         }
