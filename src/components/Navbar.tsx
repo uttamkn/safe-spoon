@@ -13,10 +13,16 @@ const Navbar: React.FC = () => {
     navigate("/about");
   };
 
+  const handleNavigateToHome = () => {
+    navigate("/");
+  };
+
   return (
-    <div className="flex justify-between items-center p-4 text-primary shadow-md">
+    <div className="flex justify-between items-center p-4 text-primary shadow-md bg-secondary w-screen">
       <div>
-        <h1 className="text-2xl font-bold">safeSpoon</h1>
+        <button onClick={handleNavigateToHome} className="text-2xl font-bold">
+          safeSpoon
+        </button>
       </div>
       <div className="flex space-x-4">
         <button
