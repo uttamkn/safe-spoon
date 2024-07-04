@@ -14,6 +14,10 @@ const SignUp: React.FC<SignUpProps> = ({ switchToSignIn }) => {
     password: "",
     confirm_password: "",
     allergies: [],
+    gender: "",
+    age: "",
+    weight: "",
+    anyDiseases: ""
   });
   const [error, setError] = useState<string>("");
 
@@ -49,6 +53,10 @@ const SignUp: React.FC<SignUpProps> = ({ switchToSignIn }) => {
         password: "",
         confirm_password: "",
         allergies: [],
+        gender: "",
+        age: "",
+        weight: "",
+        anyDiseases: ""
       });
       toast.success("User created successfully");
       switchToSignIn();
@@ -66,7 +74,7 @@ const SignUp: React.FC<SignUpProps> = ({ switchToSignIn }) => {
   };
 
   return (
-    <div className="w-96 flex flex-col pl-10 pt-10 pr-10 pb-3 justify-center bg-secondary gap-5 rounded-md border border-primary shadow-md text-primary">
+    <div className="w-full max-w-2xl flex flex-col pl-10 pt-10 pr-10 pb-3 justify-center bg-secondary gap-5 rounded-md border border-primary shadow-md text-primary mx-auto">
       <h1 className="font-heading2 font-bold text-4xl mb-2 text-primary cursor-default">
         Register Now
       </h1>
@@ -91,39 +99,81 @@ const SignUp: React.FC<SignUpProps> = ({ switchToSignIn }) => {
           onChange={handleChange}
         />
 
-        <Input
-          label="Password"
-          type="password"
-          name="password"
-          placeholder="Must be at least 8 characters long"
-          pattern=".{8,}"
-          value={formData.password}
-          onChange={handleChange}
-          required={true}
-        />
+        <div className="flex gap-5">
+          <Input
+            label="Password"
+            type="password"
+            name="password"
+            placeholder="Must be at least 8 characters long"
+            pattern=".{8,}"
+            value={formData.password}
+            onChange={handleChange}
+            required={true}
+          />
+
+          <Input
+            label="Confirm Password"
+            type="password"
+            name="confirm_password"
+            placeholder="Must match the password"
+            value={formData.confirm_password}
+            onChange={handleChange}
+            required={true}
+          />
+        </div>
+
+        <div className="flex gap-5">
+          <Input
+            label="Gender"
+            type="text"
+            name="gender"
+            placeholder="Male/Female"
+            value={formData.gender}
+            onChange={handleChange}
+          />
+
+          <Input
+            label="Age"
+            type="number"
+            name="age"
+            placeholder="Age"
+            value={formData.age}
+            onChange={handleChange}
+          />
+
+          <Input
+            label="Weight"
+            type="number"
+            name="weight"
+            placeholder="Weight in kg"
+            value={formData.weight}
+            onChange={handleChange}
+          />
+        </div>
 
         <Input
-          label="Confirm Password"
-          type="password"
-          name="confirm_password"
-          placeholder="Must match the password"
-          value={formData.confirm_password}
+          label="Any Diseases"
+          type="text"
+          name="anyDiseases"
+          placeholder="Any diseases"
+          value={formData.anyDiseases}
           onChange={handleChange}
-          required={true}
         />
 
-        {error && <div className="text-center text-red-600">*{error}*</div>}
+        {error && <div className="text-center text-red-600">{error}</div>}
         <div className="w-100 text-center text-sm italic font-light text-primary cursor-default">
           Don't forget to wash your hands
         </div>
-        <button
-          className="text-secondary w-full bg-primary rounded p-2 shadow-lg active:shadow-none"
-          type="submit"
-        >
-          Sign Up
-        </button>
+        <div className="flex justify-center">
+          <button
+            className="text-secondary w-56 bg-primary rounded p-2 px-3 shadow-lg active:shadow-none align-center"
+            type="submit"
+          >
+            Sign Up
+          </button>
+        </div>
       </form>
-      <div className="w-full">
+      <div className="w-full text-center">
         Already have an account?{" "}
         <button className="font-semibold" onClick={switchToSignIn}>
           Sign in
