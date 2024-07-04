@@ -2,7 +2,6 @@ import React from "react";
 import Webcam from "react-webcam";
 
 type WebcamCaptureProps = {
-  image: string;
   setImage: React.Dispatch<React.SetStateAction<string>>;
 };
 
@@ -12,7 +11,7 @@ const videoConstraints = {
   facingMode: "user",
 };
 
-const WebcamCapture: React.FC<WebcamCaptureProps> = ({ image, setImage }) => {
+const WebcamCapture: React.FC<WebcamCaptureProps> = ({ setImage }) => {
   const webcamRef = React.useRef<Webcam>(null);
 
   const capture = () => {
