@@ -7,6 +7,7 @@ module.exports = {
         primary: "#000000",
         secondary: "#ffffff",
         ternery: "#007713",
+        bg_green: "#a1e57e",
       },
       backgroundImage: {
         'about-image': "url('/src/assets/images/About_bg.jpg')",

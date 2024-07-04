@@ -48,6 +48,7 @@ export function UserContextProvider({
             typeof response.data === "object" &&
             !Array.isArray(response.data)
           ) {
+            console.log(response.data)
             setUser(response.data);
           } else {
             throw new Error("Unexpected data format received");
