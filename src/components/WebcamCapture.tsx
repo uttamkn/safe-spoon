@@ -21,16 +21,21 @@ const WebcamCapture: React.FC<WebcamCaptureProps> = ({ setImage }) => {
   };
 
   return (
-    <div>
+    <div className="w-full">
       <Webcam
         audio={false}
-        height={720}
+        height={680}
         ref={webcamRef}
         screenshotFormat="image/jpeg"
-        width={720}
+        width={680}
         videoConstraints={videoConstraints}
       />
-      <button onClick={capture}>Capture photo</button>
+      <button
+        onClick={capture}
+        className="p-2 bg-slate-300 text-primary rounded-md w-full mx-auto"
+      >
+        Capture photo
+      </button>
     </div>
   );
 };

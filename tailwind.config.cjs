@@ -10,12 +10,13 @@ module.exports = {
         bg_green: "#a1e57e",
       },
       backgroundImage: {
-        'about-image': "url('/src/assets/images/About_bg.jpg')",
-        'signin-image':"url('/src/assets/images/signin_bg.png')",
+        "about-image": "url('/src/assets/images/About_bg.jpg')",
+        "signin-image": "url('/src/assets/images/signin_bg.png')",
       },
       fontFamily: {
         heading: ["Bricolage Grotesque"],
         roboto: ["Roboto"],
+        sans: ["Roboto"],
       },
       inset: {
         "2/10": "20%",
