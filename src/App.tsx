@@ -7,6 +7,7 @@ import {
 import { Toaster } from "react-hot-toast";
 import Auth from "./pages/Auth";
 import Home from "./pages/Home";
+import About from "./pages/About";
 import axios from "axios";
 import { UserContextProvider } from "./context/UserContext";
 
@@ -22,6 +23,10 @@ const App: React.FC = () => {
     {
       path: "/auth",
       element: <Auth />,
+    },
+    {
+      path: "/about",
+      element: <About />,
     },
     {
       path: "*",
