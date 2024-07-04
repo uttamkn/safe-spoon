@@ -13,7 +13,7 @@ const Auth: React.FC = () => {
   };
 
   return (
-    <div className="">
+    <div className="bg-signin-image bg-cover">
       <div className="flex justify-center items-center h-screen">
         {isSignIn ? (
           <SignIn switchToSignUp={switchToSignUp} />
