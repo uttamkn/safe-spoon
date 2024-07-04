@@ -155,7 +155,7 @@ const SignUp: React.FC<SignUpProps> = ({ switchToSignIn }) => {
           label="Any Diseases"
           type="text"
           name="anyDiseases"
-          placeholder="Any diseases"
+          placeholder="common flu, ..."
           value={formData.anyDiseases}
           onChange={handleChange}
         />

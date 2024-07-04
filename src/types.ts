@@ -2,6 +2,7 @@ export type User = {
   id: number;
   username: string;
   allergies: string[];
+  
 };
 
 export type UserSignIn = {
