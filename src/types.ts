@@ -14,4 +14,8 @@ export type UserSignUp = {
   password: string;
   confirm_password: string;
   allergies: string[];
+  gender: string;
+  age: string;
+  weight: string;
+  anyDiseases:string;
 };
