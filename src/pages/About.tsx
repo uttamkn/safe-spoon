@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/UserContext";
 import { toast } from "react-hot-toast";
+import Navbar from "../components/Navbar";
 
 const About = () => {
   const { user, loading } = useAuth();
@@ -18,14 +19,15 @@ const About = () => {
   }, [loading, user, navigate]);
 
   return (
-    <div className="min-h-screen p-8 bg-about-image bg">
+    <div className=" bg-about-image max-w-screen m-0 bg-contain">
+      <Navbar />
       <header className="py-4">
         <div className="text-center">
           <h1 className="text-4xl font-bold text-primary">About Safe Spoon</h1>
         </div>
       </header>
       <main className="px-4 sm:px-6 lg:px-8 flex justify-center items-center">
-        <section className="bg-c2 flex flex-col gap-5 mt-10 p-8 rounded-lg w-1/2 shadow-lg">
+        <section className="bg-c2 flex flex-col gap-5 mt-10 p-8 rounded-lg w-1/2 shadow-lg bg-white">
           <div className="max-w-4xl mx-auto">
             <p className="text-black-900 font-bold text-3xl mb-4">Overview</p>
             <p className="text-gray-700 text-lg">
