@@ -39,7 +39,7 @@ const Navbar: React.FC = () => {
       </div>
       <div className="flex space-x-4">
         <button onClick={handleNavigateToProfile} className="text-primary">
-          Profile
+          <img className="w-10 h-10 rounded-full" src="../src/assets/images/profile_img.jpg" alt="profile" />
         </button>
         <button
           onClick={handleNavigateToAbout}
