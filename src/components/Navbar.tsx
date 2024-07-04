@@ -22,11 +22,20 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <div className="flex justify-between items-center p-4 text-primary shadow-md bg-secondary w-screen">
+    <div className="flex justify-between items-center p-4 text-primary shadow-md bg-secondary w-full">
       <div>
-        <button onClick={handleNavigateToHome} className="text-2xl font-bold">
-          safeSpoon
-        </button>
+        <div className="flex ">
+           <img
+              src="../src/assets/images/logo_img.jpg"
+              alt="Profile"
+              className="w-14 h-14 rounded-full"
+           /> 
+            <button onClick={handleNavigateToHome} className="text-3xl ml-5 font-bold">
+            SafeSpoon
+             </button>
+        </div>
+      
+        
       </div>
       <div className="flex space-x-4">
         <button onClick={handleNavigateToProfile} className="text-primary">
