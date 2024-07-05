@@ -6,10 +6,12 @@ import toast from "react-hot-toast";
 import ImageInputOpts from "../components/ImageInputOpts";
 import axios from "axios";
 import { parseString } from "../api/utils";
+import Input from "../components/ui/Input.tsx";
 
 const Home: React.FC = () => {
   const [image, setImage] = useState<string>("");
   const [report, setReport] = useState<string>("");
+  const [foodInput, setFoodInput] = useState<string>("");
   const navigate = useNavigate();
   const { user, loading } = useAuth();
 
@@ -35,7 +37,7 @@ const Home: React.FC = () => {
 
     toast.loading("Processing image...");
     try {
-      const response = await axios.post("/image-processing/process_image", {
+      const response = await axios.post("/input-processing/process_image", {
         image,
         username: user.username,
       });
@@ -50,8 +52,31 @@ const Home: React.FC = () => {
     }
   };
 
+  const handleTextSubmit = async () => {
+    if (!foodInput) {
+      toast.error("Please enter a food product.");
+      return;
+    }
+
+    toast.loading("Processing input...");
+    try {
+      const response = await axios.post("/input-processing/process_text", {
+        food: foodInput,
+        username: user.username,
+      });
+
+      setReport(response.data[0]);
+      toast.dismiss();
+      toast.success("Input processed successfully!");
+    } catch (error) {
+      toast.dismiss();
+      toast.error("Error processing input");
+      console.error("Error:", error);
+    }
+  };
+
   return (
-    <div className="h-screen">
+    <div className="">
       <Navbar />
       <div className="flex h-full">
         <div className="w-1/3 border-r p-5">
@@ -61,7 +86,22 @@ const Home: React.FC = () => {
               onClick={handleImageSubmit}
               className="p-2 bg-ternery text-white rounded-md w-40 m-auto"
             >
-              Submit Image
+              Get Report from Image
+            </button>
+            <hr />
+            <div className="w-full text-center font-light">or</div>
+            <Input
+              type="text"
+              name="ingredients"
+              placeholder="Input food product"
+              value={foodInput}
+              onChange={(e) => setFoodInput(e.target.value)}
+            />
+            <button
+              onClick={handleTextSubmit}
+              className="p-2 bg-ternery text-white rounded-md w-40 m-auto"
+            >
+              Get Report from Text
             </button>
           </div>
         </div>
