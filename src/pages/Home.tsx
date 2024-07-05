@@ -106,7 +106,7 @@ const Home: React.FC = () => {
           </div>
         </div>
         <div className="w-2/3 p-4">
-          <h1 className="text-3xl font-extrabold w-full mb-5">Report</h1>
+          <h1 className="text-3xl font-bold w-full my-5 text-center">REPORT</h1>
           <div className="text-lg">
             {
               <ul>
