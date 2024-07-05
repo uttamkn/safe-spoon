@@ -17,7 +17,7 @@ const SignUp: React.FC<SignUpProps> = ({ switchToSignIn }) => {
     gender: "",
     age: "",
     weight: "",
-    anyDiseases: ""
+    anyDiseases: "",
   });
   const [error, setError] = useState<string>("");
 
@@ -34,8 +34,22 @@ const SignUp: React.FC<SignUpProps> = ({ switchToSignIn }) => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    // Form validation
+    const age = parseInt(formData.age);
+    const weight = parseFloat(formData.weight);
+
     if (formData.password !== formData.confirm_password) {
       setError("Passwords do not match");
+      return;
+    } else if (!/^\d+$/.test(formData.age) || age <= 0 || age >= 125) {
+      setError("Please enter a valid age below 125");
+      return;
+    } else if (!["male", "female"].includes(formData.gender.toLowerCase())) {
+      setError("Please enter a valid gender (male or female)");
+      return;
+    } else if (!/^\d+(\.\d+)?$/.test(formData.weight) || weight <= 0) {
+      setError("Please enter a valid weight");
       return;
     } else {
       setError("");
@@ -56,7 +70,7 @@ const SignUp: React.FC<SignUpProps> = ({ switchToSignIn }) => {
         gender: "",
         age: "",
         weight: "",
-        anyDiseases: ""
+        anyDiseases: "",
       });
       toast.success("User created successfully");
       switchToSignIn();
