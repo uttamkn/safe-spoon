@@ -1,16 +1,11 @@
 import { ChangeEvent, useState } from "react";
-import Input from "./ui/Input";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/UserContext";
-import axios from "axios";
 
-type SignInProps = {
-  switchToSignUp: () => void;
-};
-
-const SignIn: React.FC<SignInProps> = ({ switchToSignUp }) => {
+const SignIn: React.FC = () => {
   const navigate = useNavigate();
-  const { updateUser } = useAuth();
+
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -24,23 +19,11 @@ const SignIn: React.FC<SignInProps> = ({ switchToSignUp }) => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    //TODO: Send sign-in data to the server
+  };
 
-    try {
-      const { data } = await axios.post("/auth/token", formData);
-      updateUser(data.user);
-      localStorage.setItem("token", data.token);
-      navigate("/");
-    } catch (error) {
-      if (axios.isAxiosError(error) && error.response) {
-        console.error(
-          "Request failed with status code:",
-          error.response.status,
-        );
-        setError("Invalid credentials");
-      } else {
-        setError("An unexpected error occurred");
-      }
-    }
+  const switchToSignUp = () => {
+    navigate("/sign-up");
   };
 
   return (
@@ -73,21 +56,23 @@ const SignIn: React.FC<SignInProps> = ({ switchToSignUp }) => {
         />
 
         {error && <div className="text-center text-red-600">{error}</div>}
+        {
+          //TODO: Add forgot password functionality
+        }
         <div className="w-100 text-center text-sm italic font-light text-primary cursor-default">
           Forgot password? Me too.
         </div>
-        <button
-          className="text-secondary w-full bg-primary rounded p-2 shadow-lg active:shadow-none"
-          type="submit"
-        >
-          Sign in
-        </button>
+        <Button type="submit">Sign in</Button>
       </form>
       <div className="w-full">
         Don't have an account?{" "}
-        <button className="font-semibold" onClick={switchToSignUp}>
+        <Button
+          variant="link"
+          className="pl-0 font-semibold"
+          onClick={switchToSignUp}
+        >
           Sign up
-        </button>
+        </Button>
       </div>
     </div>
   );

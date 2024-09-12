@@ -1,15 +1,13 @@
+import { Input } from "./ui/input";
+import { Button } from "./ui/button";
 import { ChangeEvent, useState } from "react";
-import Input from "./ui/Input";
-import { toast } from "react-hot-toast";
-import axios from "axios";
-import { UserSignUp } from "../types.ts";
+import { useNavigate } from "react-router-dom";
 
-type SignUpProps = {
-  switchToSignIn: () => void;
-};
+const SignUp: React.FC = () => {
+  const navigate = useNavigate();
 
-const SignUp: React.FC<SignUpProps> = ({ switchToSignIn }) => {
-  const [formData, setFormData] = useState<UserSignUp>({
+  //TODO: Change diseases to an array of strings
+  const [formData, setFormData] = useState({
     username: "",
     password: "",
     confirm_password: "",
@@ -24,12 +22,8 @@ const SignUp: React.FC<SignUpProps> = ({ switchToSignIn }) => {
   const handleChange = ({
     target: { name, value },
   }: ChangeEvent<HTMLInputElement>) => {
-    if (name === "allergies") {
-      const allergiesArray = value.split(",").map((allergy) => allergy.trim());
-      setFormData((prev) => ({ ...prev, [name]: allergiesArray }));
-    } else {
-      setFormData((prev) => ({ ...prev, [name]: value }));
-    }
+    //WARN: This wont work for arrays
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -39,6 +33,7 @@ const SignUp: React.FC<SignUpProps> = ({ switchToSignIn }) => {
     const age = parseInt(formData.age);
     const weight = parseFloat(formData.weight);
 
+    //TODO: Do better validation
     if (formData.password !== formData.confirm_password) {
       setError("Passwords do not match");
       return;
@@ -57,34 +52,11 @@ const SignUp: React.FC<SignUpProps> = ({ switchToSignIn }) => {
 
     const { confirm_password, ...data } = formData;
     console.log(data);
+    //TODO: Send sign-up data to the server
+  };
 
-    try {
-      await axios.put("/auth/sign_up", data);
-
-      // Success
-      setFormData({
-        username: "",
-        password: "",
-        confirm_password: "",
-        allergies: [],
-        gender: "",
-        age: "",
-        weight: "",
-        diseases: "",
-      });
-      toast.success("User created successfully");
-      switchToSignIn();
-    } catch (error) {
-      if (axios.isAxiosError(error) && error.response) {
-        console.error(
-          "Request failed with status code:",
-          error.response.status,
-        );
-        setError("User already exists, try a different username");
-      } else {
-        setError("An unexpected error occurred");
-      }
-    }
+  const switchToSignIn = () => {
+    navigate("/sign-in");
   };
 
   return (
@@ -178,20 +150,17 @@ const SignUp: React.FC<SignUpProps> = ({ switchToSignIn }) => {
         <div className="w-100 text-center text-sm italic font-light text-primary cursor-default">
           Don't forget to wash your hands
         </div>
-        <div className="flex justify-center">
-          <button
-            className="text-secondary w-56 bg-primary rounded p-2 px-3 shadow-lg active:shadow-none align-center"
-            type="submit"
-          >
-            Sign Up
-          </button>
-        </div>
+        <Button type="submit">Sign Up</Button>
       </form>
       <div className="w-full text-center">
         Already have an account?{" "}
-        <button className="font-semibold" onClick={switchToSignIn}>
+        <Button
+          variant="link"
+          className="pl-0 font-semibold"
+          onClick={switchToSignIn}
+        >
           Sign in
-        </button>
+        </Button>
       </div>
     </div>
   );
