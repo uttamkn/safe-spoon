@@ -3,7 +3,6 @@ import Input from "./ui/Input";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/UserContext";
 import axios from "axios";
-import { UserSignIn } from "../types.ts";
 
 type SignInProps = {
   switchToSignUp: () => void;
@@ -12,7 +11,7 @@ type SignInProps = {
 const SignIn: React.FC<SignInProps> = ({ switchToSignUp }) => {
   const navigate = useNavigate();
   const { updateUser } = useAuth();
-  const [formData, setFormData] = useState<UserSignIn>({
+  const [formData, setFormData] = useState({
     username: "",
     password: "",
   });
@@ -35,7 +34,7 @@ const SignIn: React.FC<SignInProps> = ({ switchToSignUp }) => {
       if (axios.isAxiosError(error) && error.response) {
         console.error(
           "Request failed with status code:",
-          error.response.status
+          error.response.status,
         );
         setError("Invalid credentials");
       } else {

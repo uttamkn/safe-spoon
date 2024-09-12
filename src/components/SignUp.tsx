@@ -17,9 +17,9 @@ const SignUp: React.FC<SignUpProps> = ({ switchToSignIn }) => {
     gender: "",
     age: "",
     weight: "",
-    anyDiseases: "",
+    diseases: "",
   });
-  const [error, setError] = useState<string>("");
+  const [error, setError] = useState("");
 
   const handleChange = ({
     target: { name, value },
@@ -70,7 +70,7 @@ const SignUp: React.FC<SignUpProps> = ({ switchToSignIn }) => {
         gender: "",
         age: "",
         weight: "",
-        anyDiseases: "",
+        diseases: "",
       });
       toast.success("User created successfully");
       switchToSignIn();
@@ -78,7 +78,7 @@ const SignUp: React.FC<SignUpProps> = ({ switchToSignIn }) => {
       if (axios.isAxiosError(error) && error.response) {
         console.error(
           "Request failed with status code:",
-          error.response.status
+          error.response.status,
         );
         setError("User already exists, try a different username");
       } else {
@@ -166,11 +166,11 @@ const SignUp: React.FC<SignUpProps> = ({ switchToSignIn }) => {
         </div>
 
         <Input
-          label="Any Diseases"
+          label="Diseases"
           type="text"
-          name="anyDiseases"
+          name="diseases"
           placeholder="common flu, ..."
-          value={formData.anyDiseases}
+          value={formData.diseases}
           onChange={handleChange}
         />
 
