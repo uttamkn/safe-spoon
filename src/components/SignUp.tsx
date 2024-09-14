@@ -2,20 +2,26 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { ChangeEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { AxiosError } from "axios";
+import { UserT } from "@/types";
+import { sendEmail } from "@/api/auth";
+
+type SignUpFormT = UserT & { confirm_password: string };
 
 const SignUp: React.FC = () => {
   const navigate = useNavigate();
 
   //TODO: Change diseases to an array of strings
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<SignUpFormT>({
     username: "",
     password: "",
+    email: "",
     confirm_password: "",
     allergies: [],
     gender: "",
-    age: "",
-    weight: "",
-    diseases: "",
+    age: 0,
+    weight: 0,
+    diseases: [],
   });
   const [error, setError] = useState("");
 
@@ -30,20 +36,25 @@ const SignUp: React.FC = () => {
     event.preventDefault();
 
     // Form validation
-    const age = parseInt(formData.age);
-    const weight = parseFloat(formData.weight);
 
     //TODO: Do better validation
     if (formData.password !== formData.confirm_password) {
       setError("Passwords do not match");
       return;
-    } else if (!/^\d+$/.test(formData.age) || age <= 0 || age >= 125) {
+    } else if (
+      !/^\d+$/.test("" + formData.age) ||
+      formData.age <= 0 ||
+      formData.age >= 125
+    ) {
       setError("Please enter a valid age below 125");
       return;
     } else if (!["male", "female"].includes(formData.gender.toLowerCase())) {
       setError("Please enter a valid gender (male or female)");
       return;
-    } else if (!/^\d+(\.\d+)?$/.test(formData.weight) || weight <= 0) {
+    } else if (
+      !/^\d+(\.\d+)?$/.test("" + formData.weight) ||
+      formData.weight <= 0
+    ) {
       setError("Please enter a valid weight");
       return;
     } else {
@@ -51,16 +62,24 @@ const SignUp: React.FC = () => {
     }
 
     const { confirm_password, ...data } = formData;
-    console.log(data);
-    //TODO: Send sign-up data to the server
+
+    try {
+      await sendEmail(data.email);
+
+      localStorage.setItem("sign-up-data", JSON.stringify(data));
+      navigate("/sign-up/verify");
+    } catch (err: AxiosError | any) {
+      setError(err.response.data.error);
+    }
   };
 
   const switchToSignIn = () => {
     navigate("/sign-in");
   };
 
+  //TODO: Figure out a way to add multiple allergies and diseases
   return (
-    <div className="w-full max-w-2xl flex flex-col pl-10 pt-10 pr-10 pb-3 justify-center bg-secondary gap-5 rounded-md border border-primary shadow-md text-primary mx-auto">
+    <div className="max-w-2xl flex flex-col pl-10 pt-10 pr-10 pb-3 justify-center bg-secondary gap-5 rounded-md border border-primary shadow-md text-primary">
       <h1 className="font-heading2 font-bold text-4xl mb-2 text-primary cursor-default">
         Register Now
       </h1>
@@ -72,6 +91,16 @@ const SignUp: React.FC = () => {
           name="username"
           placeholder="Elon"
           value={formData.username}
+          onChange={handleChange}
+          required={true}
+        />
+
+        <Input
+          label="Email"
+          type="email"
+          name="email"
+          placeholder="example@gmail.com"
+          value={formData.email}
           onChange={handleChange}
           required={true}
         />

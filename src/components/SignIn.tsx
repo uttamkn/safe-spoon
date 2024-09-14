@@ -2,12 +2,16 @@ import { ChangeEvent, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
+import { AxiosError } from "axios";
+import { useAuth } from "@/context/AuthContext";
+import { getTokenAfterSignIn } from "@/api/auth";
 
 const SignIn: React.FC = () => {
+  const { setToken } = useAuth();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    username: "",
+    email: "",
     password: "",
   });
   const [error, setError] = useState<string>("");
@@ -19,7 +23,13 @@ const SignIn: React.FC = () => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    //TODO: Send sign-in data to the server
+    try {
+      const token = await getTokenAfterSignIn(formData);
+      setToken(token);
+      navigate("/");
+    } catch (err: AxiosError | any) {
+      setError(err.response.data.error);
+    }
   };
 
   const switchToSignUp = () => {
@@ -36,11 +46,11 @@ const SignIn: React.FC = () => {
 
       <form className="flex flex-col gap-5 w-full" onSubmit={handleSubmit}>
         <Input
-          label="Username"
-          value={formData.username}
-          type="text"
-          name="username"
-          placeholder="musk"
+          label="Email"
+          value={formData.email}
+          type="email"
+          name="email"
+          placeholder="example@gmail.com"
           required
           onChange={handleChange}
         />

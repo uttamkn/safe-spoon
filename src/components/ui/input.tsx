@@ -10,11 +10,11 @@ export interface InputProps
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ label, className, type, ...props }, ref) => {
     return (
-      <>
+      <div>
         {label && (
           <label
             className={cn(
-              "block text-sm font-medium text-zinc-900 dark:text-zinc-100",
+              "mb-1 block text-sm font-medium text-zinc-900 dark:text-zinc-100",
             )}
           >
             {label}
@@ -29,7 +29,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           ref={ref}
           {...props}
         />
-      </>
+      </div>
     );
   },
 );
