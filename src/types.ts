@@ -3,7 +3,7 @@ export type UserT = {
   password: string;
   email: string;
   allergies: string[];
-  gender: "male" | "female" | "";
+  gender: string;
   age: number;
   weight: number;
   diseases: string[];

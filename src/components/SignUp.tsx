@@ -5,13 +5,20 @@ import { useNavigate } from "react-router-dom";
 import { AxiosError } from "axios";
 import { UserT } from "@/types";
 import { sendEmail } from "@/api/auth";
+import {
+  Select,
+  SelectItem,
+  SelectContent,
+  SelectValue,
+  SelectTrigger,
+} from "@/components/ui/select";
+import { Badge } from "@/components/ui/badge";
 
 type SignUpFormT = UserT & { confirm_password: string };
 
 const SignUp: React.FC = () => {
   const navigate = useNavigate();
 
-  //TODO: Change diseases to an array of strings
   const [formData, setFormData] = useState<SignUpFormT>({
     username: "",
     password: "",
@@ -23,21 +30,54 @@ const SignUp: React.FC = () => {
     weight: 0,
     diseases: [],
   });
+  const [allergyInput, setAllergyInput] = useState("");
+  const [diseaseInput, setDiseaseInput] = useState("");
   const [error, setError] = useState("");
 
   const handleChange = ({
     target: { name, value },
   }: ChangeEvent<HTMLInputElement>) => {
-    //WARN: This wont work for arrays
     setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleAddAllergy = () => {
+    if (allergyInput && !formData.allergies.includes(allergyInput)) {
+      setFormData((prev) => ({
+        ...prev,
+        allergies: [...prev.allergies, allergyInput],
+      }));
+      setAllergyInput("");
+    }
+  };
+
+  const handleAddDisease = () => {
+    if (diseaseInput && !formData.diseases.includes(diseaseInput)) {
+      setFormData((prev) => ({
+        ...prev,
+        diseases: [...prev.diseases, diseaseInput],
+      }));
+      setDiseaseInput("");
+    }
+  };
+
+  const handleRemoveAllergy = (allergy: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      allergies: prev.allergies.filter((a) => a !== allergy),
+    }));
+  };
+
+  const handleRemoveDisease = (disease: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      diseases: prev.diseases.filter((d) => d !== disease),
+    }));
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     // Form validation
-
-    //TODO: Do better validation
     if (formData.password !== formData.confirm_password) {
       setError("Passwords do not match");
       return;
@@ -49,7 +89,7 @@ const SignUp: React.FC = () => {
       setError("Please enter a valid age below 125");
       return;
     } else if (!["male", "female"].includes(formData.gender.toLowerCase())) {
-      setError("Please enter a valid gender (male or female)");
+      setError("Please select a valid gender");
       return;
     } else if (
       !/^\d+(\.\d+)?$/.test("" + formData.weight) ||
@@ -77,14 +117,11 @@ const SignUp: React.FC = () => {
     navigate("/sign-in");
   };
 
-  //TODO: Figure out a way to add multiple allergies and diseases
   return (
-    <div className="max-w-2xl flex flex-col pl-10 pt-10 pr-10 pb-3 justify-center bg-secondary gap-5 rounded-md border border-primary shadow-md text-primary">
-      <h1 className="font-heading2 font-bold text-4xl mb-2 text-primary cursor-default">
-        Register Now
-      </h1>
+    <div className="max-w-xl mx-auto mt-10 p-6 bg-secondary text-primary border border-primary rounded-md shadow-md space-y-6">
+      <h1 className="text-3xl font-bold">Register Now</h1>
 
-      <form className="flex flex-col gap-5 w-full" onSubmit={handleSubmit}>
+      <form className="space-y-4" onSubmit={handleSubmit}>
         <Input
           label="Username"
           type="text"
@@ -92,7 +129,7 @@ const SignUp: React.FC = () => {
           placeholder="Elon"
           value={formData.username}
           onChange={handleChange}
-          required={true}
+          required
         />
 
         <Input
@@ -102,17 +139,33 @@ const SignUp: React.FC = () => {
           placeholder="example@gmail.com"
           value={formData.email}
           onChange={handleChange}
-          required={true}
+          required
         />
 
-        <Input
-          label="Allergies"
-          type="text"
-          name="allergies"
-          placeholder="e.g., peanuts, gluten"
-          value={formData.allergies.join(", ")}
-          onChange={handleChange}
-        />
+        <div>
+          <label htmlFor="allergies" className="block text-sm font-medium">
+            Allergies
+          </label>
+          <div className="flex items-center gap-2 mt-2">
+            <Input
+              type="text"
+              name="allergies"
+              placeholder="e.g., peanuts, gluten"
+              value={allergyInput}
+              onChange={(e) => setAllergyInput(e.target.value)}
+            />
+            <Button onClick={handleAddAllergy} type="button">
+              Add
+            </Button>
+          </div>
+          <div className="mt-2 flex flex-wrap gap-2">
+            {formData.allergies.map((allergy) => (
+              <Badge key={allergy} onClick={() => handleRemoveAllergy(allergy)}>
+                {allergy}
+              </Badge>
+            ))}
+          </div>
+        </div>
 
         <div className="flex gap-5">
           <Input
@@ -123,7 +176,7 @@ const SignUp: React.FC = () => {
             pattern=".{8,}"
             value={formData.password}
             onChange={handleChange}
-            required={true}
+            required
           />
 
           <Input
@@ -133,20 +186,32 @@ const SignUp: React.FC = () => {
             placeholder="Must match the password"
             value={formData.confirm_password}
             onChange={handleChange}
-            required={true}
+            required
           />
         </div>
 
-        <div className="flex gap-5">
-          <Input
-            label="Gender"
-            type="text"
-            name="gender"
-            placeholder="Male/Female"
+        <div>
+          <label htmlFor="gender" className="block text-sm font-medium">
+            Gender
+          </label>
+          <Select
             value={formData.gender}
-            onChange={handleChange}
-          />
+            onValueChange={(value) =>
+              setFormData((prev) => ({ ...prev, gender: value }))
+            }
+            required
+          >
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Gender" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="male">Male</SelectItem>
+              <SelectItem value="female">Female</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
 
+        <div className="flex gap-5">
           <Input
             label="Age"
             type="number"
@@ -154,6 +219,7 @@ const SignUp: React.FC = () => {
             placeholder="Age"
             value={formData.age}
             onChange={handleChange}
+            required
           />
 
           <Input
@@ -163,25 +229,43 @@ const SignUp: React.FC = () => {
             placeholder="Weight in kg"
             value={formData.weight}
             onChange={handleChange}
+            required
           />
         </div>
 
-        <Input
-          label="Diseases"
-          type="text"
-          name="diseases"
-          placeholder="common flu, ..."
-          value={formData.diseases}
-          onChange={handleChange}
-        />
+        <div>
+          <label htmlFor="diseases" className="block text-sm font-medium">
+            Diseases
+          </label>
+          <div className="flex items-center gap-2 mt-2">
+            <Input
+              type="text"
+              name="diseases"
+              placeholder="e.g., common flu"
+              value={diseaseInput}
+              onChange={(e) => setDiseaseInput(e.target.value)}
+            />
+            <Button onClick={handleAddDisease} type="button">
+              Add
+            </Button>
+          </div>
+          <div className="mt-2 flex flex-wrap gap-2">
+            {formData.diseases.map((disease) => (
+              <Badge key={disease} onClick={() => handleRemoveDisease(disease)}>
+                {disease}
+              </Badge>
+            ))}
+          </div>
+        </div>
 
         {error && <div className="text-center text-red-600">{error}</div>}
-        <div className="w-100 text-center text-sm italic font-light text-primary cursor-default">
-          Don't forget to wash your hands
-        </div>
-        <Button type="submit">Sign Up</Button>
+
+        <Button type="submit" className="w-full">
+          Sign Up
+        </Button>
       </form>
-      <div className="w-full text-center">
+
+      <div className="text-center">
         Already have an account?{" "}
         <Button
           variant="link"

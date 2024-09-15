@@ -37,44 +37,53 @@ const SignIn: React.FC = () => {
   };
 
   return (
-    <div className="mr-6 w-96 flex flex-col pl-10 pt-10 pr-10 pb-3 justify-center bg-secondary gap-5 rounded-md border border-primary text-primary shadow-md">
-      <h1 className="font-heading2 font-bold text-4xl mb-2 text-primary cursor-default">
+    <div className="w-full max-w-md mx-auto mt-20 p-6 bg-secondary text-primary border border-primary rounded-md shadow-md space-y-6">
+      <h1 className="text-3xl font-bold text-primary mb-4">
         Hello,
         <br />
         Welcome Back
       </h1>
 
-      <form className="flex flex-col gap-5 w-full" onSubmit={handleSubmit}>
-        <Input
-          label="Email"
-          value={formData.email}
-          type="email"
-          name="email"
-          placeholder="example@gmail.com"
-          required
-          onChange={handleChange}
-        />
+      <form className="space-y-4" onSubmit={handleSubmit}>
+        <div>
+          <Input
+            label="Email"
+            value={formData.email}
+            type="email"
+            name="email"
+            placeholder="example@gmail.com"
+            required
+            onChange={handleChange}
+          />
+        </div>
 
-        <Input
-          label="Password"
-          value={formData.password}
-          type="password"
-          name="password"
-          placeholder="********"
-          required
-          onChange={handleChange}
-        />
+        <div>
+          <Input
+            label="Password"
+            value={formData.password}
+            type="password"
+            name="password"
+            placeholder="********"
+            required
+            onChange={handleChange}
+          />
+        </div>
 
         {error && <div className="text-center text-red-600">{error}</div>}
+
         {
           //TODO: Add forgot password functionality
         }
-        <div className="w-100 text-center text-sm italic font-light text-primary cursor-default">
+        <div className="text-center text-sm italic font-light text-primary">
           Forgot password? Me too.
         </div>
-        <Button type="submit">Sign in</Button>
+
+        <Button type="submit" className="w-full">
+          Sign in
+        </Button>
       </form>
-      <div className="w-full">
+
+      <div className="text-center">
         Don't have an account?{" "}
         <Button
           variant="link"

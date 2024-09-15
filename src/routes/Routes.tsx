@@ -3,7 +3,11 @@ import ProtectedRoutes from "./ProtectedRoutes";
 import { useAuth } from "@/context/AuthContext";
 import SignUp from "@/components/SignUp";
 import SignIn from "@/components/SignIn";
-import OtpPage from "@/pages/OtpPage";
+import Verify from "@/pages/Verify";
+import Home from "@/pages/Home";
+import Profile from "@/pages/Profile";
+import About from "@/pages/About";
+import Hero from "@/pages/Hero";
 
 const Routes = () => {
   const { token } = useAuth();
@@ -11,7 +15,7 @@ const Routes = () => {
   const publicRoutes = [
     {
       path: "/about",
-      element: <h1>About</h1>,
+      element: <About />,
     },
   ];
 
@@ -22,22 +26,22 @@ const Routes = () => {
       children: [
         {
           path: "/",
-          element: <h1>Main Page</h1>,
+          element: <Home />,
         },
         {
           path: "/profile",
-          element: <h1>Profile</h1>,
+          element: <Profile />,
         },
       ],
     },
   ];
 
-  //TODO: Redesign signin and signup components (and show them as popups)
+  //TODO: Show sign-in and sign-up components as popups when clicked on the buttons in the hero page
   //TODO: Add a gif to the hero page (make this similar to main page but without functionality)
   const nonPrivateRoutes = [
     {
       path: "/",
-      element: <h1>Hero page</h1>,
+      element: <Hero />,
     },
     {
       path: "/sign-in",
@@ -49,7 +53,7 @@ const Routes = () => {
     },
     {
       path: "/sign-up/verify",
-      element: <OtpPage />,
+      element: <Verify />,
     },
   ];
 

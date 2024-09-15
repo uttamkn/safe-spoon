@@ -23,10 +23,8 @@ export const verifyEmail = async (code: number): Promise<void> => {
 };
 
 export const getTokenAfterSignUp = async (data: UserT): Promise<string> => {
-  // WARN: This should be changed
   const res = await axios.post("/api/auth/sign-up", {
     ...data,
-    diseases: [],
   });
   return res.data.token;
 };
