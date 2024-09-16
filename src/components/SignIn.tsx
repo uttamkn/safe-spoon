@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { AxiosError } from "axios";
 import { useAuth } from "@/context/AuthContext";
 import { getTokenAfterSignIn } from "@/api/auth";
+import { toast } from "sonner";
 
 const SignIn: React.FC = () => {
   const { setToken } = useAuth();
@@ -26,6 +27,7 @@ const SignIn: React.FC = () => {
     try {
       const token = await getTokenAfterSignIn(formData);
       setToken(token);
+      toast("Welcome back!");
       navigate("/");
     } catch (err: AxiosError | any) {
       setError(err.response.data.error);

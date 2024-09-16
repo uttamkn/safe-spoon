@@ -2,6 +2,7 @@ import { useState, useRef, FC } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { toast } from "sonner";
 import {
   Camera,
   Image as ImageIcon,
@@ -10,12 +11,10 @@ import {
 } from "lucide-react";
 import { sendImageForOCR } from "@/api/imageProcessing";
 
-//TODO: Add notifications
 const ImageInput: FC<{ setExtractedText: (text: string | null) => void }> = ({
   setExtractedText,
 }) => {
   const [image, setImage] = useState<string | null>(null);
-  const [error, setError] = useState("");
   const [isCameraOn, setIsCameraOn] = useState(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -25,9 +24,9 @@ const ImageInput: FC<{ setExtractedText: (text: string | null) => void }> = ({
     if (image) {
       const text = await sendImageForOCR(image);
       setExtractedText(text);
-      setError("");
+      toast("Image submitted successfully");
     } else {
-      setError("Please capture an image first");
+      toast("Please capture an image first");
     }
   };
 
@@ -44,6 +43,7 @@ const ImageInput: FC<{ setExtractedText: (text: string | null) => void }> = ({
 
       reader.readAsDataURL(file);
     }
+    toast("Image uploaded successfully");
   };
 
   const handleDrop = (e: React.DragEvent) => {
@@ -51,8 +51,9 @@ const ImageInput: FC<{ setExtractedText: (text: string | null) => void }> = ({
     const file = e.dataTransfer.files?.[0];
     if (file && file.type.startsWith("image/")) {
       setImage(URL.createObjectURL(file));
+      toast("Image uploaded successfully");
     } else {
-      setError("Please upload a valid image file");
+      toast("Please upload a valid image file");
     }
   };
 
@@ -70,10 +71,10 @@ const ImageInput: FC<{ setExtractedText: (text: string | null) => void }> = ({
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
       }
-      setError("");
+      toast("Camera started successfully");
     } catch (err) {
       console.error("Error accessing camera:", err);
-      setError("Error accessing camera");
+      toast("Error accessing camera");
     }
   };
 
@@ -84,14 +85,14 @@ const ImageInput: FC<{ setExtractedText: (text: string | null) => void }> = ({
       const dataURL = canvasRef.current.toDataURL("image/png");
       setImage(dataURL);
       stopCamera();
+      toast("Image captured successfully");
     } else {
-      setError("Please start the camera first");
+      toast("Please start the camera first");
     }
   };
 
   const stopCamera = () => {
     setIsCameraOn(false);
-    setError("");
     if (videoRef.current?.srcObject) {
       const stream = videoRef.current.srcObject as MediaStream;
       const tracks = stream.getTracks();
@@ -187,12 +188,6 @@ const ImageInput: FC<{ setExtractedText: (text: string | null) => void }> = ({
                 </div>
               )}
             </div>
-
-            {error && (
-              <div className="text-center text-red-500 font-medium">
-                *{error}*
-              </div>
-            )}
 
             <Button
               onClick={submitImage}

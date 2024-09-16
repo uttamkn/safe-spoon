@@ -1,3 +1,4 @@
+import { Toaster } from "sonner";
 import AuthProvider from "./context/AuthContext";
 import Routes from "./routes/Routes";
 import axios from "axios";
@@ -9,6 +10,7 @@ const App = () => {
   return (
     <AuthProvider>
       <Routes />
+      <Toaster />
     </AuthProvider>
   );
 };
