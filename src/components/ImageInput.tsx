@@ -3,6 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Camera, Image as ImageIcon, UploadCloud } from "lucide-react";
+import { sendImageForOCR } from "@/api/imageProcessing";
 
 //TODO: Add notifications
 function ImageInput() {
@@ -13,11 +14,28 @@ function ImageInput() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const imageInputRef = useRef<HTMLInputElement | null>(null);
 
+  const submitImage = async () => {
+    if (image) {
+      const res = await sendImageForOCR(image);
+      console.log("OCR Results: ", res);
+      setError("");
+    } else {
+      setError("Please capture an image first");
+    }
+  };
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     const file = e.target.files?.[0];
     if (file) {
-      setImage(URL.createObjectURL(file));
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+        const base64String = reader.result as string;
+        setImage(base64String);
+      };
+
+      reader.readAsDataURL(file);
     }
   };
 
@@ -73,40 +91,43 @@ function ImageInput() {
     }
   };
 
-  const submitImage = () => {
-    if (image) {
-      //TODO: Submit image to server
-      console.log("Image submitted:", image);
-      setError("");
-    } else {
-      setError("Please capture an image first");
-    }
-  };
-
   return (
-    <Card className="max-w-lg mx-auto p-6 space-y-6 bg-white shadow-md rounded-lg">
+    <Card className="w-full max-w-lg">
       <CardHeader>
         <CardTitle className="text-center text-xl font-semibold text-gray-800">
           Upload or Capture Image
         </CardTitle>
       </CardHeader>
 
-      <CardContent className="space-y-4">
-        <div className="flex justify-center items-center flex-col gap-4">
-          <Input
-            type="file"
-            accept="image/*"
-            style={{ display: "none" }}
-            ref={imageInputRef}
-            onChange={handleFileChange}
-            className="w-full border-dashed border-2 border-gray-300 px-4 hover:bg-gray-100 transition duration-200"
-          />
+      <CardContent className="">
+        {/* Hidden input for file upload */}
+        <Input
+          type="file"
+          accept="image/*"
+          ref={imageInputRef}
+          onChange={handleFileChange}
+          className="hidden"
+        />
 
+        {/* Hidden canvas for capturing image */}
+        <canvas
+          className="hidden"
+          ref={canvasRef}
+          width="640"
+          height="480"
+        ></canvas>
+
+        <div className="flex justify-center items-center flex-col">
           <div className="w-full">
             <div className="flex w-full justify-around items-center gap-3 mt-3">
               <Button
-                onClick={isCameraOn ? stopCamera : startCamera}
-                variant="outline"
+                onClick={
+                  isCameraOn
+                    ? stopCamera
+                    : image
+                      ? () => setImage(null)
+                      : startCamera
+                }
                 className="flex-1 flex items-center justify-center gap-2"
               >
                 <Camera className="h-5 w-5" />
@@ -147,19 +168,13 @@ function ImageInput() {
                   }}
                   onDrop={handleDrop}
                   onDragOver={handleDragOver}
-                  className="w-full min-h-64 flex flex-col items-center justify-center text-gray-400 text-sm"
+                  className="cursor-pointer w-full min-h-64 flex flex-col items-center justify-center text-gray-400 text-sm"
                 >
                   <ImageIcon className="h-16 w-16 mb-2" /> {/* Icon */}
                   <span>Drag & Drop or Click to Upload</span>{" "}
                 </div>
               )}
             </div>
-            <canvas
-              className="hidden"
-              ref={canvasRef}
-              width="640"
-              height="480"
-            ></canvas>
 
             {error && (
               <div className="text-center text-red-500 font-medium">
