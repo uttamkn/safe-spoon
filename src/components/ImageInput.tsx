@@ -1,12 +1,19 @@
-import { useState, useRef } from "react";
+import { useState, useRef, FC } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { Camera, Image as ImageIcon, UploadCloud } from "lucide-react";
+import {
+  Camera,
+  Image as ImageIcon,
+  UploadCloud,
+  CameraOff,
+} from "lucide-react";
 import { sendImageForOCR } from "@/api/imageProcessing";
 
 //TODO: Add notifications
-function ImageInput() {
+const ImageInput: FC<{ setExtractedText: (text: string | null) => void }> = ({
+  setExtractedText,
+}) => {
   const [image, setImage] = useState<string | null>(null);
   const [error, setError] = useState("");
   const [isCameraOn, setIsCameraOn] = useState(false);
@@ -16,8 +23,8 @@ function ImageInput() {
 
   const submitImage = async () => {
     if (image) {
-      const res = await sendImageForOCR(image);
-      console.log("OCR Results: ", res);
+      const text = await sendImageForOCR(image);
+      setExtractedText(text);
       setError("");
     } else {
       setError("Please capture an image first");
@@ -84,6 +91,7 @@ function ImageInput() {
 
   const stopCamera = () => {
     setIsCameraOn(false);
+    setError("");
     if (videoRef.current?.srcObject) {
       const stream = videoRef.current.srcObject as MediaStream;
       const tracks = stream.getTracks();
@@ -130,7 +138,11 @@ function ImageInput() {
                 }
                 className="flex-1 flex items-center justify-center gap-2"
               >
-                <Camera className="h-5 w-5" />
+                {isCameraOn ? (
+                  <CameraOff className="h-5 w-5" />
+                ) : (
+                  <Camera className="h-5 w-5" />
+                )}
                 {isCameraOn ? "Stop Camera" : image ? "Retake" : "Start Camera"}
               </Button>
 
@@ -194,6 +206,6 @@ function ImageInput() {
       </CardContent>
     </Card>
   );
-}
+};
 
 export default ImageInput;
