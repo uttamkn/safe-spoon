@@ -39,7 +39,7 @@ const ProtectedRoutes = () => {
   }
 
   if (!isValid) {
-    console.error("Token is invalid");
+    console.error("Unauthorized access");
     setToken(null);
     return <Navigate to="/" />;
   }

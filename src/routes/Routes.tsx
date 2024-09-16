@@ -9,6 +9,7 @@ import Profile from "@/pages/Profile";
 import About from "@/pages/About";
 import Hero from "@/pages/Hero";
 
+//TODO: Add error boundary
 const Routes = () => {
   const { token } = useAuth();
 
