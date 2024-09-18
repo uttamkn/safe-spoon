@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const sendImageForOCR = async (image: string) => {
-  const res = await axios.post("api/inputProcessing/ocr", { image });
-  return res.data.text;
+export const getReport = async (image: string) => {
+  const res = await axios.post("api/inputProcessing/get-report", { image });
+  return res.data;
 };

@@ -9,10 +9,11 @@ import {
   UploadCloud,
   CameraOff,
 } from "lucide-react";
-import { sendImageForOCR } from "@/api/imageProcessing";
+import { getReport } from "@/api/imageProcessing";
+import { ReportT } from "@/types";
 
-const ImageInput: FC<{ setExtractedText: (text: string | null) => void }> = ({
-  setExtractedText,
+const ImageInput: FC<{ setReport: (report: ReportT | null) => void }> = ({
+  setReport,
 }) => {
   const [image, setImage] = useState<string | null>(null);
   const [isCameraOn, setIsCameraOn] = useState(false);
@@ -20,11 +21,12 @@ const ImageInput: FC<{ setExtractedText: (text: string | null) => void }> = ({
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const imageInputRef = useRef<HTMLInputElement | null>(null);
 
+  //TODO: Add a loading animation while the image is being processed
   const submitImage = async () => {
     if (image) {
-      const text = await sendImageForOCR(image);
-      setExtractedText(text);
       toast("Image submitted successfully");
+      const report: ReportT = await getReport(image);
+      setReport(report);
     } else {
       toast("Please capture an image first");
     }

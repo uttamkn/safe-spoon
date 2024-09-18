@@ -8,3 +8,17 @@ export type UserT = {
   weight: number;
   diseases: string[];
 };
+
+export type ReportT = {
+  is_valid: boolean;
+  is_safe: boolean;
+  ingredient_risks: IngredientRisk[];
+  overall_suggestion: string;
+};
+
+type IngredientRisk = {
+  ingredient: string;
+  is_safe: boolean;
+  risk_level: "low" | "moderate" | "high";
+  reason: string;
+};
