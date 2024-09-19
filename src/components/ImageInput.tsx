@@ -24,6 +24,7 @@ const ImageInput: FC<{ setReport: (report: ReportT | null) => void }> = ({
   //TODO: Add a loading animation while the image is being processed
   const submitImage = async () => {
     if (image) {
+      setReport(null);
       toast("Image submitted successfully");
       const report: ReportT = await getReport(image);
       setReport(report);

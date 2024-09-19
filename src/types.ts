@@ -13,10 +13,9 @@ export type ReportT = {
   is_valid: boolean;
   is_safe: boolean;
   ingredient_risks: IngredientRisk[];
-  overall_suggestion: string;
 };
 
-type IngredientRisk = {
+export type IngredientRisk = {
   ingredient: string;
   is_safe: boolean;
   risk_level: "low" | "moderate" | "high";
