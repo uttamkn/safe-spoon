@@ -106,12 +106,12 @@ const ImageInput: FC<{ setReport: (report: ReportT | null) => void }> = ({
   return (
     <Card className="w-full max-w-lg">
       <CardHeader>
-        <CardTitle className="text-center text-xl font-semibold text-gray-800">
+        <CardTitle className="text-center text-xl font-semibold">
           Upload or Capture Image
         </CardTitle>
       </CardHeader>
 
-      <CardContent className="">
+      <CardContent>
         {/* Hidden input for file upload */}
         <Input
           type="file"
@@ -160,7 +160,7 @@ const ImageInput: FC<{ setReport: (report: ReportT | null) => void }> = ({
               </Button>
             </div>
 
-            <div className="bg-zinc-100 mt-6 p-3 border border-dashed border-gray-300 rounded-lg">
+            <div className="mt-6 p-3 border border-dashed rounded-lg">
               {image ? (
                 <img
                   src={image}
@@ -184,7 +184,7 @@ const ImageInput: FC<{ setReport: (report: ReportT | null) => void }> = ({
                   }}
                   onDrop={handleDrop}
                   onDragOver={handleDragOver}
-                  className="cursor-pointer w-full min-h-64 flex flex-col items-center justify-center text-gray-400 text-sm"
+                  className="cursor-pointer w-full min-h-64 flex flex-col items-center justify-center text-sm"
                 >
                   <ImageIcon className="h-16 w-16 mb-2" /> {/* Icon */}
                   <span>Drag & Drop or Click to Upload</span>{" "}

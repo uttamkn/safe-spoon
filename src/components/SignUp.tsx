@@ -120,7 +120,7 @@ const SignUp: React.FC = () => {
   };
 
   return (
-    <div className="max-w-xl mx-auto mt-10 p-6 bg-secondary text-primary border border-primary rounded-md shadow-md space-y-6">
+    <div className="max-w-xl mx-auto mt-10 p-6 border rounded-md shadow-md space-y-6">
       <h1 className="text-3xl font-bold">Register Now</h1>
 
       <form className="space-y-4" onSubmit={handleSubmit}>

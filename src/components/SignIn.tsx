@@ -39,7 +39,7 @@ const SignIn: React.FC = () => {
   };
 
   return (
-    <div className="w-full max-w-md mx-auto mt-20 p-6 bg-secondary text-primary border border-primary rounded-md shadow-md space-y-6">
+    <div className="w-full max-w-md mx-auto mt-20 p-6 border rounded-md shadow-md space-y-6">
       <h1 className="text-3xl font-bold text-primary mb-4">
         Hello,
         <br />
