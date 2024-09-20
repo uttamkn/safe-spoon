@@ -4,6 +4,12 @@ module.exports = {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      colors: {
+        primary: "#010409",
+        secondary: "#0d1117",
+        tertiary: "#151b23",
+        border: "#2f353d",
+      },
       keyframes: {
         "caret-blink": {
           "0%, 70%, 100%": { opacity: 1 },

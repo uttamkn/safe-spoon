@@ -8,18 +8,26 @@ const Home = () => {
   const [report, setReport] = useState<ReportT | null>(null);
 
   return (
-    <div className="flex h-screen w-screen bg-white dark:bg-zinc-900">
-      <ModeToggle />
-      <div className="flex h-full w-2/5 items-center justify-center p-6">
+    //TODO: Move the ModeToggle component to the navbar
+    <div className="dark:bg-primary relative flex h-screen w-screen flex-col bg-white md:flex-row">
+      <div className="absolute right-4 top-4">
+        <ModeToggle />
+      </div>
+
+      <div className="flex h-full w-full items-center justify-center border-b border-gray-300 p-6 dark:border-zinc-700 md:w-2/5 md:border-b-0 md:border-r">
         <ImageInput setReport={(report: ReportT | null) => setReport(report)} />
       </div>
+
       <div className="flex h-full w-full flex-col items-center justify-between p-6">
         {report === null ? (
-          <p className="text-2xl">No report to display</p>
+          <p className="text-center text-xl text-gray-600 dark:text-gray-300 md:text-2xl">
+            No report to display
+          </p>
         ) : (
-          <Report report={report} />
+          <div className="h-full w-full max-w-4xl">
+            <Report report={report} />
+          </div>
         )}
-        <div className="flex items-center justify-center">Disclaimer</div>
       </div>
     </div>
   );

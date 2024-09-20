@@ -104,7 +104,7 @@ const ImageInput: FC<{ setReport: (report: ReportT | null) => void }> = ({
   };
 
   return (
-    <Card className="w-full max-w-lg">
+    <Card className="dark:bg-secondary w-full max-w-lg">
       <CardHeader>
         <CardTitle className="text-center text-xl font-semibold">
           Upload or Capture Image
@@ -133,6 +133,7 @@ const ImageInput: FC<{ setReport: (report: ReportT | null) => void }> = ({
           <div className="w-full">
             <div className="mt-3 flex w-full items-center justify-around gap-3">
               <Button
+                variant="green"
                 onClick={
                   isCameraOn
                     ? stopCamera
@@ -151,6 +152,7 @@ const ImageInput: FC<{ setReport: (report: ReportT | null) => void }> = ({
               </Button>
 
               <Button
+                variant="green"
                 onClick={takePhoto}
                 disabled={!isCameraOn}
                 className="flex flex-1 items-center justify-center gap-2"
@@ -160,7 +162,7 @@ const ImageInput: FC<{ setReport: (report: ReportT | null) => void }> = ({
               </Button>
             </div>
 
-            <div className="mt-6 rounded-lg border border-dashed p-3">
+            <div className="dark:bg-tertiary dark:border-border mt-6 rounded-lg border border-dashed border-gray-600 bg-gray-100 p-3">
               {image ? (
                 <img
                   src={image}
@@ -184,15 +186,16 @@ const ImageInput: FC<{ setReport: (report: ReportT | null) => void }> = ({
                   }}
                   onDrop={handleDrop}
                   onDragOver={handleDragOver}
-                  className="flex min-h-64 w-full cursor-pointer flex-col items-center justify-center text-sm"
+                  className="flex min-h-64 w-full cursor-pointer flex-col items-center justify-center text-sm dark:text-white"
                 >
-                  <ImageIcon className="mb-2 h-16 w-16" /> {/* Icon */}
+                  <ImageIcon className="mb-2 h-16 w-16" />
                   <span>Drag & Drop or Click to Upload</span>{" "}
                 </div>
               )}
             </div>
 
             <Button
+              variant="green"
               onClick={submitImage}
               className="mt-4 flex w-full items-center justify-center gap-2"
             >
