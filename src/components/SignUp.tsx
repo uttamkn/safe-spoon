@@ -120,7 +120,7 @@ const SignUp: React.FC = () => {
   };
 
   return (
-    <div className="max-w-xl mx-auto mt-10 p-6 border rounded-md shadow-md space-y-6">
+    <div className="mx-auto mt-10 max-w-xl space-y-6 rounded-md border p-6 shadow-md">
       <h1 className="text-3xl font-bold">Register Now</h1>
 
       <form className="space-y-4" onSubmit={handleSubmit}>
@@ -148,7 +148,7 @@ const SignUp: React.FC = () => {
           <label htmlFor="allergies" className="block text-sm font-medium">
             Allergies
           </label>
-          <div className="flex items-center gap-2 mt-2">
+          <div className="mt-2 flex items-center gap-2">
             <Input
               type="text"
               name="allergies"
@@ -239,7 +239,7 @@ const SignUp: React.FC = () => {
           <label htmlFor="diseases" className="block text-sm font-medium">
             Diseases
           </label>
-          <div className="flex items-center gap-2 mt-2">
+          <div className="mt-2 flex items-center gap-2">
             <Input
               type="text"
               name="diseases"

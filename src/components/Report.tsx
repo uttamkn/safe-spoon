@@ -10,11 +10,11 @@ type ReportProps = {
 const Report: FC<ReportProps> = ({ report }) => {
   return (
     <div className="space-y-6">
-      <div className="flex justify-center items-center space-x-2">
+      <div className="flex items-center justify-center space-x-2">
         {report.is_valid && report.ingredient_risks.length !== 0 ? (
           report.is_safe ? (
             <div className="flex items-center space-x-2">
-              <CheckCircle className="text-green-500 w-full h-full" />
+              <CheckCircle className="h-full w-full text-green-500" />
               <p className="text-3xl font-semibold text-green-600">
                 Safe to consume
               </p>
@@ -25,15 +25,15 @@ const Report: FC<ReportProps> = ({ report }) => {
             </p>
           )
         ) : (
-          <div className="flex flex-col items-center h-full w-full">
-            <XCircle className="text-red-500 w-full h-full" />
-            <p className="text-3xl text-red-500 font-semibold">Invalid input</p>
+          <div className="flex h-full w-full flex-col items-center">
+            <XCircle className="h-full w-full text-red-500" />
+            <p className="text-3xl font-semibold text-red-500">Invalid input</p>
           </div>
         )}
       </div>
 
       {report.is_valid && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
           {report.ingredient_risks.map((risk, index) => (
             <IngredientCard key={index} risk={risk} />
           ))}

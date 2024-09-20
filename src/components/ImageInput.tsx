@@ -129,9 +129,9 @@ const ImageInput: FC<{ setReport: (report: ReportT | null) => void }> = ({
           height="480"
         ></canvas>
 
-        <div className="flex justify-center items-center flex-col">
+        <div className="flex flex-col items-center justify-center">
           <div className="w-full">
-            <div className="flex w-full justify-around items-center gap-3 mt-3">
+            <div className="mt-3 flex w-full items-center justify-around gap-3">
               <Button
                 onClick={
                   isCameraOn
@@ -140,7 +140,7 @@ const ImageInput: FC<{ setReport: (report: ReportT | null) => void }> = ({
                       ? () => setImage(null)
                       : startCamera
                 }
-                className="flex-1 flex items-center justify-center gap-2"
+                className="flex flex-1 items-center justify-center gap-2"
               >
                 {isCameraOn ? (
                   <CameraOff className="h-5 w-5" />
@@ -153,26 +153,26 @@ const ImageInput: FC<{ setReport: (report: ReportT | null) => void }> = ({
               <Button
                 onClick={takePhoto}
                 disabled={!isCameraOn}
-                className="flex-1 flex items-center justify-center gap-2"
+                className="flex flex-1 items-center justify-center gap-2"
               >
                 <ImageIcon className="h-5 w-5" />
                 Capture
               </Button>
             </div>
 
-            <div className="mt-6 p-3 border border-dashed rounded-lg">
+            <div className="mt-6 rounded-lg border border-dashed p-3">
               {image ? (
                 <img
                   src={image}
                   alt="captured"
-                  className="w-full rounded-lg max-h-64 object-contain"
+                  className="max-h-64 w-full rounded-lg object-contain"
                 />
               ) : (
                 isCameraOn && (
                   <video
                     ref={videoRef}
                     autoPlay
-                    className="w-full max-h-64 rounded-lg object-cover"
+                    className="max-h-64 w-full rounded-lg object-cover"
                   />
                 )
               )}
@@ -184,9 +184,9 @@ const ImageInput: FC<{ setReport: (report: ReportT | null) => void }> = ({
                   }}
                   onDrop={handleDrop}
                   onDragOver={handleDragOver}
-                  className="cursor-pointer w-full min-h-64 flex flex-col items-center justify-center text-sm"
+                  className="flex min-h-64 w-full cursor-pointer flex-col items-center justify-center text-sm"
                 >
-                  <ImageIcon className="h-16 w-16 mb-2" /> {/* Icon */}
+                  <ImageIcon className="mb-2 h-16 w-16" /> {/* Icon */}
                   <span>Drag & Drop or Click to Upload</span>{" "}
                 </div>
               )}
@@ -194,7 +194,7 @@ const ImageInput: FC<{ setReport: (report: ReportT | null) => void }> = ({
 
             <Button
               onClick={submitImage}
-              className="w-full flex items-center justify-center gap-2 mt-4"
+              className="mt-4 flex w-full items-center justify-center gap-2"
             >
               <UploadCloud className="h-5 w-5" />
               Submit Image

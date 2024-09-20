@@ -8,18 +8,18 @@ const Home = () => {
   const [report, setReport] = useState<ReportT | null>(null);
 
   return (
-    <div className="h-screen w-screen flex bg-white dark:bg-zinc-900">
+    <div className="flex h-screen w-screen bg-white dark:bg-zinc-900">
       <ModeToggle />
-      <div className="p-6 h-full w-2/5 flex justify-center items-center">
+      <div className="flex h-full w-2/5 items-center justify-center p-6">
         <ImageInput setReport={(report: ReportT | null) => setReport(report)} />
       </div>
-      <div className="p-6 h-full w-full flex flex-col items-center justify-between">
+      <div className="flex h-full w-full flex-col items-center justify-between p-6">
         {report === null ? (
           <p className="text-2xl">No report to display</p>
         ) : (
           <Report report={report} />
         )}
-        <div className="flex justify-center items-center">Disclaimer</div>
+        <div className="flex items-center justify-center">Disclaimer</div>
       </div>
     </div>
   );

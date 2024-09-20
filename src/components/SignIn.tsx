@@ -39,8 +39,8 @@ const SignIn: React.FC = () => {
   };
 
   return (
-    <div className="w-full max-w-md mx-auto mt-20 p-6 border rounded-md shadow-md space-y-6">
-      <h1 className="text-3xl font-bold text-primary mb-4">
+    <div className="mx-auto mt-20 w-full max-w-md space-y-6 rounded-md border p-6 shadow-md">
+      <h1 className="text-primary mb-4 text-3xl font-bold">
         Hello,
         <br />
         Welcome Back
@@ -76,7 +76,7 @@ const SignIn: React.FC = () => {
         {
           //TODO: Add forgot password functionality
         }
-        <div className="text-center text-sm italic font-light text-primary">
+        <div className="text-primary text-center text-sm font-light italic">
           Forgot password? Me too.
         </div>
 
