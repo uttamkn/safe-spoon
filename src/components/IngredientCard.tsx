@@ -9,10 +9,10 @@ type IngredientCardProps = {
 
 const IngredientCard: FC<IngredientCardProps> = ({ risk }) => {
   return (
-    <Card>
+    <Card className="dark:bg-secondary">
       <CardHeader>
         <h2 className="text-lg font-bold">{risk.ingredient}</h2>
-        <Badge variant={risk.is_safe ? "default" : "destructive"}>
+        <Badge variant={risk.is_safe ? "safe" : "destructive"}>
           {risk.is_safe ? "Safe" : "Risky"}
         </Badge>
       </CardHeader>
