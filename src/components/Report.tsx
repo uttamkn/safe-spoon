@@ -1,8 +1,9 @@
 import { FC } from "react";
 import { ReportT } from "../types";
-import { CheckCircle, XCircle } from "lucide-react";
+import { AlertCircle, CheckCircle, XCircle } from "lucide-react";
 import { ScrollArea } from "./ui/scroll-area";
 import IngredientCard from "./IngredientCard";
+import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
 
 type ReportProps = {
   report: ReportT;
@@ -10,7 +11,7 @@ type ReportProps = {
 
 const Report: FC<ReportProps> = ({ report }) => {
   return (
-    <div className="flex h-full w-full flex-col items-center justify-around">
+    <div className="flex h-full w-full flex-col items-center justify-between">
       {report.is_valid && report.ingredient_risks.length !== 0 ? (
         report.is_safe ? (
           <div className="flex flex-col items-center justify-center">
@@ -26,14 +27,14 @@ const Report: FC<ReportProps> = ({ report }) => {
         )
       ) : (
         <div className="flex h-full w-full flex-col items-center justify-center">
-          <XCircle className="h-32 w-32 text-red-500 md:h-20 md:w-20" />
+          <XCircle className="h-36 w-36 text-red-500 md:h-20 md:w-20" />
           <p className="text-3xl font-semibold text-red-600">Invalid input</p>
         </div>
       )}
 
-      {report.is_valid && (
+      {report.is_valid && report.ingredient_risks.length !== 0 && (
         <>
-          <ScrollArea className="h-[300px] overflow-y-auto sm:h-[400px] md:h-[500px] lg:h-[600px]">
+          <ScrollArea className="h-[300px] overflow-y-auto rounded-md p-6 dark:bg-secondary sm:h-[400px] md:h-[500px] lg:h-[600px]">
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
               {report.ingredient_risks.map((risk, index) => (
                 <IngredientCard key={index} risk={risk} />
@@ -41,16 +42,15 @@ const Report: FC<ReportProps> = ({ report }) => {
             </div>
           </ScrollArea>
 
-          <div className="w-full max-w-4xl">
-            <div className="mt-6 pt-4 text-center text-xs text-gray-500 dark:border-zinc-700 dark:text-gray-400 md:text-sm">
-              <p className="italic">
-                Disclaimer: The information provided in the report is based on
-                the data you provided and is not intended as medical advice.
-                Always consult a healthcare provider for dietary
-                recommendations.
-              </p>
-            </div>
-          </div>
+          <Alert variant="warning" className="mt-6">
+            <AlertCircle className="h-4 w-4" />
+            <AlertTitle>Disclaimer</AlertTitle>
+            <AlertDescription>
+              The information provided in the report is based on the data you
+              provided and is not intended as medical advice. Always consult a
+              healthcare provider for dietary recommendations.
+            </AlertDescription>
+          </Alert>
         </>
       )}
     </div>

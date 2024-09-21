@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import { AxiosError } from "axios";
 import { UserT } from "@/types";
 import { sendEmail } from "@/api/auth";
-import { toast } from "sonner";
 import {
   Select,
   SelectItem,
@@ -107,7 +106,7 @@ const SignUp: React.FC = () => {
     try {
       await sendEmail(data.email);
 
-      toast("OTP was sent to your email");
+      // toast("OTP was sent to your email");
       localStorage.setItem("sign-up-data", JSON.stringify(data));
       navigate("/sign-up/verify");
     } catch (err: AxiosError | any) {

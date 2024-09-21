@@ -9,21 +9,21 @@ type IngredientCardProps = {
 
 const IngredientCard: FC<IngredientCardProps> = ({ risk }) => {
   return (
-    <Card className="dark:bg-secondary">
-      <CardHeader>
-        <h2 className="text-lg font-bold">{risk.ingredient}</h2>
+    <Card className="flex flex-col gap-2 dark:bg-tertiary">
+      <CardHeader className="flex h-1/2 flex-col justify-between">
+        <h2 className="flex font-bold">{risk.ingredient}</h2>
         <Badge variant={risk.is_safe ? "safe" : "destructive"}>
           {risk.is_safe ? "Safe" : "Risky"}
         </Badge>
       </CardHeader>
-      <CardContent>
-        <p>
+      <CardContent className="flex h-1/2 flex-col justify-between">
+        <div>
           Risk Level:{" "}
           <Badge variant={getRiskLevelBadgeVariant(risk.risk_level)}>
             {capitalizeFirstLetter(risk.risk_level)}
           </Badge>
-        </p>
-        <p>{risk.reason}</p>
+        </div>
+        <div>{risk.reason}</div>
       </CardContent>
     </Card>
   );

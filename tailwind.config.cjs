@@ -8,6 +8,7 @@ module.exports = {
         primary: "#010409",
         secondary: "#0d1117",
         tertiary: "#151b23",
+        quaternary: "#e5e7eb",
         border: "#2f353d",
       },
       keyframes: {

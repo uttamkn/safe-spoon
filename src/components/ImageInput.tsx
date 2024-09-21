@@ -2,7 +2,6 @@ import { useState, useRef, FC } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { toast } from "sonner";
 import {
   Camera,
   Image as ImageIcon,
@@ -12,24 +11,30 @@ import {
 import { getReport } from "@/api/imageProcessing";
 import { ReportT } from "@/types";
 
-const ImageInput: FC<{ setReport: (report: ReportT | null) => void }> = ({
-  setReport,
-}) => {
+type ImageInputProps = {
+  setReport: (report: ReportT | null) => void;
+  setLoading: (isLoading: boolean) => void;
+};
+
+const ImageInput: FC<ImageInputProps> = ({ setReport, setLoading }) => {
   const [image, setImage] = useState<string | null>(null);
   const [isCameraOn, setIsCameraOn] = useState(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const imageInputRef = useRef<HTMLInputElement | null>(null);
 
-  //TODO: Add a loading animation while the image is being processed
+  //TODO: Replace toast with something else
   const submitImage = async () => {
     if (image) {
       setReport(null);
-      toast("Image submitted successfully");
+      setLoading(true);
+      // toast("Image submitted successfully");
       const report: ReportT = await getReport(image);
+      setImage(null);
       setReport(report);
+      setLoading(false);
     } else {
-      toast("Please capture an image first");
+      // toast("Please capture an image first");
     }
   };
 
@@ -46,7 +51,7 @@ const ImageInput: FC<{ setReport: (report: ReportT | null) => void }> = ({
 
       reader.readAsDataURL(file);
     }
-    toast("Image uploaded successfully");
+    // toast("Image uploaded successfully");
   };
 
   const handleDrop = (e: React.DragEvent) => {
@@ -54,9 +59,9 @@ const ImageInput: FC<{ setReport: (report: ReportT | null) => void }> = ({
     const file = e.dataTransfer.files?.[0];
     if (file && file.type.startsWith("image/")) {
       setImage(URL.createObjectURL(file));
-      toast("Image uploaded successfully");
+      // toast("Image uploaded successfully");
     } else {
-      toast("Please upload a valid image file");
+      // toast("Please upload a valid image file");
     }
   };
 
@@ -74,10 +79,10 @@ const ImageInput: FC<{ setReport: (report: ReportT | null) => void }> = ({
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
       }
-      toast("Camera started successfully");
+      // toast("Camera started successfully");
     } catch (err) {
       console.error("Error accessing camera:", err);
-      toast("Error accessing camera");
+      // toast("Error accessing camera");
     }
   };
 
@@ -88,9 +93,9 @@ const ImageInput: FC<{ setReport: (report: ReportT | null) => void }> = ({
       const dataURL = canvasRef.current.toDataURL("image/png");
       setImage(dataURL);
       stopCamera();
-      toast("Image captured successfully");
+      // toast("Image captured successfully");
     } else {
-      toast("Please start the camera first");
+      // toast("Please start the camera first");
     }
   };
 
@@ -104,7 +109,7 @@ const ImageInput: FC<{ setReport: (report: ReportT | null) => void }> = ({
   };
 
   return (
-    <Card className="dark:bg-secondary w-full max-w-lg">
+    <Card className="w-full max-w-lg dark:border-border dark:bg-secondary">
       <CardHeader>
         <CardTitle className="text-center text-xl font-semibold">
           Upload or Capture Image
@@ -162,7 +167,7 @@ const ImageInput: FC<{ setReport: (report: ReportT | null) => void }> = ({
               </Button>
             </div>
 
-            <div className="dark:bg-tertiary dark:border-border mt-6 rounded-lg border border-dashed border-gray-600 bg-gray-100 p-3">
+            <div className="mt-6 rounded-lg border border-dashed border-gray-600 bg-gray-100 p-3 dark:border-border dark:bg-tertiary">
               {image ? (
                 <img
                   src={image}

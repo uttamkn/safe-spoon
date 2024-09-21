@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import { AxiosError } from "axios";
 import { useAuth } from "@/context/AuthContext";
 import { getTokenAfterSignIn } from "@/api/auth";
-import { toast } from "sonner";
 
 const SignIn: React.FC = () => {
   const { setToken } = useAuth();
@@ -27,7 +26,7 @@ const SignIn: React.FC = () => {
     try {
       const token = await getTokenAfterSignIn(formData);
       setToken(token);
-      toast("Welcome back!");
+      // toast("Welcome back!");
       navigate("/");
     } catch (err: AxiosError | any) {
       setError(err.response.data.error);
@@ -40,7 +39,7 @@ const SignIn: React.FC = () => {
 
   return (
     <div className="mx-auto mt-20 w-full max-w-md space-y-6 rounded-md border p-6 shadow-md">
-      <h1 className="text-primary mb-4 text-3xl font-bold">
+      <h1 className="mb-4 text-3xl font-bold text-primary">
         Hello,
         <br />
         Welcome Back
@@ -76,7 +75,7 @@ const SignIn: React.FC = () => {
         {
           //TODO: Add forgot password functionality
         }
-        <div className="text-primary text-center text-sm font-light italic">
+        <div className="text-center text-sm font-light italic text-primary">
           Forgot password? Me too.
         </div>
 

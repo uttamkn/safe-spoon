@@ -10,6 +10,7 @@ import About from "@/pages/About";
 import Hero from "@/pages/Hero";
 
 //TODO: Add error boundary
+//TODO: navbar should be added here
 const Routes = () => {
   const { token } = useAuth();
 
@@ -64,7 +65,11 @@ const Routes = () => {
     ...privateRoutes,
   ]);
 
-  return <RouterProvider router={routes} />;
+  return (
+    <div>
+      <RouterProvider router={routes} />
+    </div>
+  );
 };
 
 export default Routes;
