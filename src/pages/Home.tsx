@@ -1,6 +1,7 @@
 import { useState } from "react";
 import ImageInput from "@/components/ImageInput";
 import Report from "@/components/Report";
+import NoReport from "@/components/NoReport";
 import { ReportT } from "@/types";
 import LoadingAnimation from "@/components/LoadingAnimation";
 
@@ -22,14 +23,7 @@ const Home = () => {
           {loading ? (
             <LoadingAnimation />
           ) : report === null ? (
-            <div className="text-center">
-              <h2 className="mb-4 text-2xl font-semibold text-gray-600 dark:text-gray-300">
-                No report to display
-              </h2>
-              <p className="mb-6 text-gray-500 dark:text-gray-400">
-                Upload an image to generate a report.
-              </p>
-            </div>
+            <NoReport />
           ) : (
             <div className="h-full w-full">
               <Report report={report} />

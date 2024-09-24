@@ -2,7 +2,7 @@ import { Button } from "./ui/button";
 
 export default function NotFoundPage() {
   return (
-    <div className="flex h-screen items-center justify-center bg-white text-gray-900 dark:bg-primary dark:text-white">
+    <div className="flex h-screen items-center justify-center text-gray-900 dark:bg-primary dark:text-white">
       <div className="p-6 text-center">
         <h1 className="mb-4 animate-pulse text-6xl font-bold">404</h1>
         <p className="mb-6 text-xl">
