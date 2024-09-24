@@ -4,7 +4,6 @@ import { useAuth } from "@/context/AuthContext";
 import Verify from "@/pages/Verify";
 import Home from "@/pages/Home";
 import Profile from "@/pages/Profile";
-import About from "@/pages/About";
 import Hero from "@/pages/Hero";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import NotFoundPage from "@/components/404";
@@ -14,13 +13,6 @@ import SignUpPage from "@/pages/SignUpPage";
 
 const Routes = () => {
   const { token } = useAuth();
-
-  const publicRoutes = [
-    {
-      path: "/about",
-      element: <About />,
-    },
-  ];
 
   const privateRoutes = [
     {
@@ -63,11 +55,7 @@ const Routes = () => {
     {
       path: "/",
       element: <NavbarLayout />,
-      children: [
-        ...publicRoutes,
-        ...(!token ? nonPrivateRoutes : []),
-        ...privateRoutes,
-      ],
+      children: [...(!token ? nonPrivateRoutes : []), ...privateRoutes],
     },
     {
       path: "*",

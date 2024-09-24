@@ -9,7 +9,7 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <nav className="bg-white p-4 text-black dark:bg-primary dark:text-quaternary">
+    <nav className="p-4 text-black dark:bg-primary dark:text-quaternary">
       <div className="mx-auto flex items-center">
         <div className="w-full text-2xl font-bold">
           <NavLink to="/">Safe Spoon</NavLink>
@@ -25,17 +25,6 @@ const Navbar = () => {
         </div>
 
         <div className="hidden w-full items-center justify-end gap-6 md:flex">
-          <NavLink
-            to="/about"
-            className={({ isActive }) =>
-              isActive
-                ? "font-medium text-indigo-600"
-                : "hover:text-indigo-600 hover:underline dark:text-quaternary"
-            }
-          >
-            About
-          </NavLink>
-
           {!token ? (
             <>
               <NavLink
