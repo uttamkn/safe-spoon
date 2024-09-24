@@ -30,7 +30,6 @@ const ImageInput: FC<ImageInputProps> = ({ setReport, setLoading }) => {
       setLoading(true);
       // toast("Image submitted successfully");
       const report: ReportT = await getReport(image);
-      setImage(null);
       setReport(report);
       setLoading(false);
     } else {

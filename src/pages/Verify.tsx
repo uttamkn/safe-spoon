@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { NavigateFunction, useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
@@ -19,7 +19,7 @@ const Verify = () => {
   const [otp, setOtp] = useState("");
   const [error, setError] = useState("");
   const { setToken } = useAuth();
-  const navigate = useNavigate();
+  const navigate: NavigateFunction = useNavigate();
 
   const handleOtpSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -45,8 +45,8 @@ const Verify = () => {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center">
-      <Card className="w-full max-w-md p-6 shadow-lg">
+    <div className="flex min-h-screen items-center justify-center dark:bg-primary">
+      <Card className="w-full max-w-md p-6 shadow-lg dark:border-border dark:bg-secondary">
         <CardHeader>
           <CardTitle className="text-center text-2xl font-semibold">
             Verify Your Email

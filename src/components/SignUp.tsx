@@ -1,7 +1,7 @@
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { ChangeEvent, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { NavigateFunction, useNavigate } from "react-router-dom";
 import { AxiosError } from "axios";
 import { UserT } from "@/types";
 import { sendEmail } from "@/api/auth";
@@ -17,7 +17,7 @@ import { Badge } from "@/components/ui/badge";
 type SignUpFormT = UserT & { confirm_password: string };
 
 const SignUp: React.FC = () => {
-  const navigate = useNavigate();
+  const navigate: NavigateFunction = useNavigate();
 
   const [formData, setFormData] = useState<SignUpFormT>({
     username: "",
@@ -119,7 +119,7 @@ const SignUp: React.FC = () => {
   };
 
   return (
-    <div className="mx-auto mt-10 max-w-xl space-y-6 rounded-md border p-6 shadow-md">
+    <div className="mx-auto mt-10 max-w-xl space-y-6 rounded-md border p-6 shadow-md dark:border-border dark:bg-secondary dark:text-quaternary">
       <h1 className="text-3xl font-bold">Register Now</h1>
 
       <form className="space-y-4" onSubmit={handleSubmit}>
@@ -155,7 +155,7 @@ const SignUp: React.FC = () => {
               value={allergyInput}
               onChange={(e) => setAllergyInput(e.target.value)}
             />
-            <Button onClick={handleAddAllergy} type="button">
+            <Button onClick={handleAddAllergy} variant="green" type="button">
               Add
             </Button>
           </div>
@@ -246,7 +246,7 @@ const SignUp: React.FC = () => {
               value={diseaseInput}
               onChange={(e) => setDiseaseInput(e.target.value)}
             />
-            <Button onClick={handleAddDisease} type="button">
+            <Button onClick={handleAddDisease} variant="green" type="button">
               Add
             </Button>
           </div>
@@ -261,7 +261,7 @@ const SignUp: React.FC = () => {
 
         {error && <div className="text-center text-red-600">{error}</div>}
 
-        <Button type="submit" className="w-full">
+        <Button type="submit" variant="green" className="w-full">
           Sign Up
         </Button>
       </form>

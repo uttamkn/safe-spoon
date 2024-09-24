@@ -1,14 +1,14 @@
 import { ChangeEvent, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router-dom";
+import { NavigateFunction, useNavigate } from "react-router-dom";
 import { AxiosError } from "axios";
 import { useAuth } from "@/context/AuthContext";
 import { getTokenAfterSignIn } from "@/api/auth";
 
 const SignIn: React.FC = () => {
   const { setToken } = useAuth();
-  const navigate = useNavigate();
+  const navigate: NavigateFunction = useNavigate();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -38,8 +38,8 @@ const SignIn: React.FC = () => {
   };
 
   return (
-    <div className="mx-auto mt-20 w-full max-w-md space-y-6 rounded-md border p-6 shadow-md">
-      <h1 className="mb-4 text-3xl font-bold text-primary">
+    <div className="mx-auto mt-20 w-full max-w-md space-y-6 rounded-md border p-6 shadow-md dark:border-border dark:bg-secondary dark:text-quaternary">
+      <h1 className="mb-4 text-3xl font-bold dark:text-quaternary">
         Hello,
         <br />
         Welcome Back
@@ -75,11 +75,11 @@ const SignIn: React.FC = () => {
         {
           //TODO: Add forgot password functionality
         }
-        <div className="text-center text-sm font-light italic text-primary">
+        <div className="text-center text-sm font-light italic dark:text-quaternary">
           Forgot password? Me too.
         </div>
 
-        <Button type="submit" className="w-full">
+        <Button type="submit" variant="green" className="w-full">
           Sign in
         </Button>
       </form>

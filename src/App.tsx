@@ -7,7 +7,7 @@ axios.defaults.baseURL = import.meta.env.VITE_API_URL;
 
 const App = () => {
   return (
-    <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <AuthProvider>
         <Routes />
       </AuthProvider>

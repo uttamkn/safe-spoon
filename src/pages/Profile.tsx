@@ -1,6 +1,6 @@
 const Profile = () => {
   return (
-    <div>
+    <div className="min-h-full dark:bg-primary">
       <h1>Profile</h1>
     </div>
   );
