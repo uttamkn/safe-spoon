@@ -1,11 +1,6 @@
 import { FC } from "react";
 import { ReportT } from "../types";
-import {
-  AlertCircle,
-  CheckCircle,
-  XCircle,
-  MessageSquareWarning,
-} from "lucide-react";
+import { AlertCircle, CheckCircle, XCircle } from "lucide-react";
 import { ScrollArea } from "./ui/scroll-area";
 import IngredientCard from "./IngredientCard";
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
@@ -27,7 +22,7 @@ const Report: FC<ReportProps> = ({ report }) => {
           </div>
         ) : (
           <div className="flex flex-col items-center justify-center">
-            <MessageSquareWarning className="h-16 w-16 text-yellow-500 md:h-32 md:w-32" />
+            <AlertCircle className="h-16 w-16 text-yellow-500 md:h-32 md:w-32" />
             <p className="text-3xl font-semibold text-yellow-600">
               Some ingredients are unsafe.
             </p>
