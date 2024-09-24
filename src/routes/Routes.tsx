@@ -1,16 +1,17 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import ProtectedRoutes from "./ProtectedRoutes";
 import { useAuth } from "@/context/AuthContext";
-import SignUp from "@/components/SignUp";
-import SignIn from "@/components/SignIn";
 import Verify from "@/pages/Verify";
 import Home from "@/pages/Home";
 import Profile from "@/pages/Profile";
 import About from "@/pages/About";
 import Hero from "@/pages/Hero";
+import ErrorBoundary from "@/components/ErrorBoundary";
+import NotFoundPage from "@/components/404";
+import NavbarLayout from "@/pages/NavbarLayout";
+import SignInPage from "@/pages/SignInPage";
+import SignUpPage from "@/pages/SignUpPage";
 
-//TODO: Add error boundary
-//TODO: navbar should be added here
 const Routes = () => {
   const { token } = useAuth();
 
@@ -38,7 +39,6 @@ const Routes = () => {
     },
   ];
 
-  //TODO: Show sign-in and sign-up components as popups when clicked on the buttons in the hero page
   //TODO: Add a gif to the hero page (make this similar to main page but without functionality)
   const nonPrivateRoutes = [
     {
@@ -47,11 +47,11 @@ const Routes = () => {
     },
     {
       path: "/sign-in",
-      element: <SignIn />,
+      element: <SignInPage />,
     },
     {
       path: "/sign-up",
-      element: <SignUp />,
+      element: <SignUpPage />,
     },
     {
       path: "/sign-up/verify",
@@ -60,15 +60,25 @@ const Routes = () => {
   ];
 
   const routes = createBrowserRouter([
-    ...publicRoutes,
-    ...(!token ? nonPrivateRoutes : []),
-    ...privateRoutes,
+    {
+      path: "/",
+      element: <NavbarLayout />,
+      children: [
+        ...publicRoutes,
+        ...(!token ? nonPrivateRoutes : []),
+        ...privateRoutes,
+      ],
+    },
+    {
+      path: "*",
+      element: <NotFoundPage />,
+    },
   ]);
 
   return (
-    <div>
+    <ErrorBoundary>
       <RouterProvider router={routes} />
-    </div>
+    </ErrorBoundary>
   );
 };
 
