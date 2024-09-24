@@ -13,7 +13,6 @@ import { Mail } from "lucide-react";
 import { AxiosError } from "axios";
 import { getTokenAfterSignUp, verifyEmail } from "@/api/auth";
 import { useAuth } from "@/context/AuthContext";
-import { toast } from "sonner";
 
 const Verify = () => {
   const [otp, setOtp] = useState("");
@@ -35,7 +34,6 @@ const Verify = () => {
       const parsedData = JSON.parse(data);
       const token = await getTokenAfterSignUp(parsedData);
       setToken(token);
-      toast("Welcome!");
       navigate("/");
     } catch (error: AxiosError | any) {
       setError("Failed to verify the email");

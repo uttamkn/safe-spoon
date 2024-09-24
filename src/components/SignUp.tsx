@@ -5,6 +5,7 @@ import { NavigateFunction, useNavigate } from "react-router-dom";
 import { AxiosError } from "axios";
 import { UserT } from "@/types";
 import { sendEmail } from "@/api/auth";
+import { useToast } from "@/hooks/use-toast";
 import {
   Select,
   SelectItem,
@@ -17,6 +18,7 @@ import { Badge } from "@/components/ui/badge";
 type SignUpFormT = UserT & { confirm_password: string };
 
 const SignUp: React.FC = () => {
+  const { toast } = useToast();
   const navigate: NavigateFunction = useNavigate();
 
   const [formData, setFormData] = useState<SignUpFormT>({
@@ -106,7 +108,10 @@ const SignUp: React.FC = () => {
     try {
       await sendEmail(data.email);
 
-      // toast("OTP was sent to your email");
+      toast({
+        title: "Email sent",
+        description: "An OTP has been sent to your email",
+      });
       localStorage.setItem("sign-up-data", JSON.stringify(data));
       navigate("/sign-up/verify");
     } catch (err: AxiosError | any) {
@@ -173,7 +178,7 @@ const SignUp: React.FC = () => {
             label="Password"
             type="password"
             name="password"
-            placeholder="Must be at least 8 characters long"
+            placeholder="Must be at least 8 characters"
             pattern=".{8,}"
             value={formData.password}
             onChange={handleChange}

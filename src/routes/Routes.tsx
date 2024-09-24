@@ -31,7 +31,6 @@ const Routes = () => {
     },
   ];
 
-  //TODO: Add a gif to the hero page (make this similar to main page but without functionality)
   const nonPrivateRoutes = [
     {
       path: "/",

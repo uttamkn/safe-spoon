@@ -2,6 +2,7 @@ import { useState, useRef, FC } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { useToast } from "@/hooks/use-toast";
 import {
   Camera,
   Image as ImageIcon,
@@ -17,23 +18,25 @@ type ImageInputProps = {
 };
 
 const ImageInput: FC<ImageInputProps> = ({ setReport, setLoading }) => {
+  const { toast } = useToast();
   const [image, setImage] = useState<string | null>(null);
   const [isCameraOn, setIsCameraOn] = useState(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const imageInputRef = useRef<HTMLInputElement | null>(null);
 
-  //TODO: Replace toast with something else
   const submitImage = async () => {
     if (image) {
       setReport(null);
       setLoading(true);
-      // toast("Image submitted successfully");
       const report: ReportT = await getReport(image);
       setReport(report);
       setLoading(false);
     } else {
-      // toast("Please capture an image first");
+      toast({
+        variant: "destructive",
+        description: "Please upload an image first",
+      });
     }
   };
 
@@ -50,7 +53,6 @@ const ImageInput: FC<ImageInputProps> = ({ setReport, setLoading }) => {
 
       reader.readAsDataURL(file);
     }
-    // toast("Image uploaded successfully");
   };
 
   const handleDrop = (e: React.DragEvent) => {
@@ -58,9 +60,11 @@ const ImageInput: FC<ImageInputProps> = ({ setReport, setLoading }) => {
     const file = e.dataTransfer.files?.[0];
     if (file && file.type.startsWith("image/")) {
       setImage(URL.createObjectURL(file));
-      // toast("Image uploaded successfully");
     } else {
-      // toast("Please upload a valid image file");
+      toast({
+        variant: "destructive",
+        description: "Please upload an image file",
+      });
     }
   };
 
@@ -78,10 +82,13 @@ const ImageInput: FC<ImageInputProps> = ({ setReport, setLoading }) => {
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
       }
-      // toast("Camera started successfully");
     } catch (err) {
       console.error("Error accessing camera:", err);
-      // toast("Error accessing camera");
+      toast({
+        variant: "destructive",
+        title: "Camera Error",
+        description: "You need to allow camera access to use this feature",
+      });
     }
   };
 
@@ -92,9 +99,6 @@ const ImageInput: FC<ImageInputProps> = ({ setReport, setLoading }) => {
       const dataURL = canvasRef.current.toDataURL("image/png");
       setImage(dataURL);
       stopCamera();
-      // toast("Image captured successfully");
-    } else {
-      // toast("Please start the camera first");
     }
   };
 

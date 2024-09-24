@@ -26,7 +26,6 @@ const SignIn: React.FC = () => {
     try {
       const token = await getTokenAfterSignIn(formData);
       setToken(token);
-      // toast("Welcome back!");
       navigate("/");
     } catch (err: AxiosError | any) {
       setError(err.response.data.error);
