@@ -14,9 +14,9 @@ export default function NotFoundPage() {
 
         <div className="mt-8 flex justify-center">
           <img
-            src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExY2toYW9kenVsODBmN3F0Z20yZTZpYXloNGc3NWZ6OHFtbXM4amt4eSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7btY4sTRahDC5M2I/giphy.webp"
-            alt="Lost astronaut animation"
-            className="h-64 rounded-md shadow-lg"
+            src="lostZoro.jpg"
+            alt="Lost zoro"
+            className="h-full w-96 rounded-md shadow-lg"
           />
         </div>
       </div>
