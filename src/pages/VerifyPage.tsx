@@ -14,7 +14,7 @@ import { AxiosError } from "axios";
 import { getTokenAfterSignUp, verifyEmail } from "@/api/auth";
 import { useAuth } from "@/context/AuthContext";
 
-const Verify = () => {
+const VerifyPage = () => {
   const [otp, setOtp] = useState("");
   const [error, setError] = useState("");
   const { setToken } = useAuth();
@@ -43,7 +43,7 @@ const Verify = () => {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center dark:bg-primary">
+    <div className="flex min-h-screen items-center justify-center p-6 font-jet-brains-mono dark:bg-primary">
       <Card className="w-full max-w-md p-6 shadow-lg dark:border-border dark:bg-secondary">
         <CardHeader>
           <CardTitle className="text-center text-2xl font-semibold">
@@ -89,4 +89,4 @@ const Verify = () => {
   );
 };
 
-export default Verify;
+export default VerifyPage;

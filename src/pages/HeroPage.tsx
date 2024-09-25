@@ -1,8 +1,8 @@
 import { ShieldAlert } from "lucide-react";
 
-const Hero = () => {
+const HeroPage = () => {
   return (
-    <div className="flex min-h-screen items-center justify-center dark:bg-primary">
+    <div className="flex min-h-screen items-center justify-center p-6 font-jet-brains-mono dark:bg-primary">
       <div className="flex max-w-3xl flex-col items-center space-y-8 text-center">
         <h1 className="text-5xl font-bold dark:text-quaternary sm:text-6xl">
           Welcome to <span className="text-green-600">Safe Spoon</span>
@@ -24,8 +24,8 @@ const Hero = () => {
           ></video>
         </div>
 
-        <div className="flex items-center space-x-2 text-[#8b949e]">
-          <ShieldAlert className="h-5 w-5 text-[#8b949e]" />
+        <div className="flex items-center justify-center space-x-2 text-[#8b949e]">
+          <ShieldAlert className="h-10 w-10 text-[#8b949e] md:h-5 md:w-5" />
           <p>
             Get personalized safety recommendations based on your health
             profile.
@@ -36,4 +36,4 @@ const Hero = () => {
   );
 };
 
-export default Hero;
+export default HeroPage;

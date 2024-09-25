@@ -1,10 +1,10 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import ProtectedRoutes from "./ProtectedRoutes";
 import { useAuth } from "@/context/AuthContext";
-import Verify from "@/pages/Verify";
-import Home from "@/pages/Home";
-import Profile from "@/pages/Profile";
-import Hero from "@/pages/Hero";
+import VerifyPage from "@/pages/VerifyPage";
+import HomePage from "@/pages/HomePage";
+import ProfilePage from "@/pages/ProfilePage";
+import HeroPage from "@/pages/HeroPage";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import NotFoundPage from "@/components/404";
 import NavbarLayout from "@/pages/NavbarLayout";
@@ -21,11 +21,11 @@ const Routes = () => {
       children: [
         {
           path: "/",
-          element: <Home />,
+          element: <HomePage />,
         },
         {
           path: "/profile",
-          element: <Profile />,
+          element: <ProfilePage />,
         },
       ],
     },
@@ -34,7 +34,7 @@ const Routes = () => {
   const nonPrivateRoutes = [
     {
       path: "/",
-      element: <Hero />,
+      element: <HeroPage />,
     },
     {
       path: "/sign-in",
@@ -46,7 +46,7 @@ const Routes = () => {
     },
     {
       path: "/sign-up/verify",
-      element: <Verify />,
+      element: <VerifyPage />,
     },
   ];
 
