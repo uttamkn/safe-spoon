@@ -1,5 +1,3 @@
-import { ShieldAlert } from "lucide-react";
-
 const HeroPage = () => {
   return (
     <div className="flex min-h-screen items-center justify-center p-6 font-jet-brains-mono dark:bg-primary">
@@ -22,14 +20,6 @@ const HeroPage = () => {
             poster="/hero-placeholder.png"
             src="/hero.mp4"
           ></video>
-        </div>
-
-        <div className="flex items-center justify-center space-x-2 text-[#8b949e]">
-          <ShieldAlert className="h-10 w-10 text-[#8b949e] md:h-5 md:w-5" />
-          <p>
-            Get personalized safety recommendations based on your health
-            profile.
-          </p>
         </div>
       </div>
     </div>
