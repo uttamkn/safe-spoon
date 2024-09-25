@@ -1,50 +1,19 @@
-import React from "react";
-import {
-  createBrowserRouter,
-  RouterProvider,
-  Navigate,
-} from "react-router-dom";
-import { Toaster } from "react-hot-toast";
-import Auth from "./pages/Auth";
-import Home from "./pages/Home";
-import About from "./pages/About";
-import Profile from "./pages/Profile";
+import AuthProvider from "./context/AuthContext";
+import Routes from "./routes/Routes";
 import axios from "axios";
-import { UserContextProvider } from "./context/UserContext";
+import { ThemeProvider } from "./context/ThemeContext";
+import { Toaster } from "./components/ui/toaster";
 
 axios.defaults.baseURL = import.meta.env.VITE_API_URL;
-axios.defaults.withCredentials = true;
 
-const App: React.FC = () => {
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <Home />,
-    },
-    {
-      path: "/auth",
-      element: <Auth />,
-    },
-    {
-      path: "/about",
-      element: <About />,
-    },
-    {
-      path: "/profile",
-      element: <Profile />,
-    },
-    {
-      path: "*",
-      element: <Navigate to="/" />,
-    },
-  ]);
+const App = () => {
   return (
-    <UserContextProvider>
-      <div>
-        <Toaster position="top-center" toastOptions={{ duration: 2000 }} />
-        <RouterProvider router={router} />
-      </div>
-    </UserContextProvider>
+    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+      <AuthProvider>
+        <Routes />
+      </AuthProvider>
+      <Toaster />
+    </ThemeProvider>
   );
 };
 

@@ -1,60 +1,136 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import { useAuth } from "@/context/AuthContext";
+import ModeToggle from "./ModeToggle";
+import { useState } from "react";
+import { Menu, X } from "lucide-react";
 
-const Navbar: React.FC = () => {
-  const navigate = useNavigate();
-
-  const handleLogout = async () => {
-    localStorage.removeItem("token");
-    window.location.reload();
-  };
-
-  const handleNavigateToAbout = () => {
-    navigate("/about");
-  };
-
-  const handleNavigateToHome = () => {
-    navigate("/");
-  };
-
-  const handleNavigateToProfile = () => {
-    navigate("/profile");
-  };
+const Navbar = () => {
+  const { token, setToken } = useAuth();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <div className="flex justify-between items-center p-4 text-primary shadow-md bg-secondary w-full">
-      <div>
-        <div className="flex ">
-           <img
-              src="../src/assets/images/logo_img.jpg"
-              alt="Profile"
-              className="w-14 h-14 rounded-full"
-           /> 
-            <button onClick={handleNavigateToHome} className="text-3xl ml-5 font-bold">
-            SafeSpoon
-             </button>
+    <nav className="px-12 pb-4 pt-6 font-jet-brains-mono text-lg dark:bg-primary dark:text-quaternary">
+      <div className="mx-auto flex items-center">
+        <div className="w-full text-2xl font-bold">
+          <NavLink to="/">Safe Spoon</NavLink>
         </div>
-      
-        
+
+        <div className="md:hidden">
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label="Toggle Menu"
+          >
+            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}{" "}
+          </button>
+        </div>
+
+        <div className="hidden w-full items-center justify-end gap-6 md:flex">
+          {!token ? (
+            <>
+              <NavLink
+                to="/sign-in"
+                className={({ isActive }) =>
+                  isActive
+                    ? "font-medium text-indigo-600"
+                    : "hover:text-indigo-600 hover:underline dark:text-quaternary"
+                }
+              >
+                Sign In
+              </NavLink>
+              <NavLink
+                to="/sign-up"
+                className={({ isActive }) =>
+                  isActive
+                    ? "font-medium text-indigo-600"
+                    : "hover:text-indigo-600 hover:underline dark:text-quaternary"
+                }
+              >
+                Sign Up
+              </NavLink>
+              <ModeToggle />
+            </>
+          ) : (
+            <>
+              <NavLink
+                to="/profile"
+                className={({ isActive }) =>
+                  isActive
+                    ? "font-medium text-indigo-600"
+                    : "hover:text-indigo-600 hover:underline dark:text-quaternary"
+                }
+              >
+                Profile
+              </NavLink>
+              <div
+                onClick={() => setToken(null)}
+                className="cursor-pointer font-medium hover:underline dark:text-quaternary"
+              >
+                Logout
+              </div>
+              <ModeToggle />
+            </>
+          )}
+        </div>
       </div>
-      <div className="flex space-x-4">
-        <button onClick={handleNavigateToProfile} className="text-primary">
-          <img className="w-10 h-10 rounded-full" src="../src/assets/images/profile_img.jpg" alt="profile" />
-        </button>
-        <button
-          onClick={handleNavigateToAbout}
-          className="text-white bg-ternery px-4 py-2 rounded-md "
-        >
-          About
-        </button>
-        <button
-          onClick={handleLogout}
-          className="text-white bg-ternery px-4 py-2 rounded-md"
-        >
-          Logout
-        </button>
-      </div>
-    </div>
+
+      {isMenuOpen && (
+        <div className="absolute right-6 md:hidden">
+          <div className="flex flex-col gap-2">
+            {!token ? (
+              <>
+                <NavLink
+                  to="/sign-in"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "font-medium text-indigo-600"
+                      : "hover:text-indigo-600 hover:underline dark:text-quaternary"
+                  }
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Sign In
+                </NavLink>
+                <NavLink
+                  to="/sign-up"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "font-medium text-indigo-600"
+                      : "hover:text-indigo-600 hover:underline dark:text-quaternary"
+                  }
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Sign Up
+                </NavLink>
+                <ModeToggle />
+              </>
+            ) : (
+              <>
+                <NavLink
+                  to="/profile"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "font-medium text-indigo-600"
+                      : "hover:text-indigo-600 hover:underline dark:text-quaternary"
+                  }
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Profile
+                </NavLink>
+                <div
+                  onClick={() => {
+                    setToken(null);
+                    setIsMenuOpen(false);
+                  }}
+                  className="cursor-pointer font-medium hover:underline dark:text-quaternary"
+                >
+                  Logout
+                </div>
+                <ModeToggle />
+              </>
+            )}
+          </div>
+        </div>
+      )}
+    </nav>
   );
 };
 

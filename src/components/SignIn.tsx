@@ -1,19 +1,17 @@
 import { ChangeEvent, useState } from "react";
-import Input from "./ui/Input";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/UserContext";
-import axios from "axios";
-import { UserSignIn } from "../types.ts";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { NavigateFunction, useNavigate } from "react-router-dom";
+import { AxiosError } from "axios";
+import { useAuth } from "@/context/AuthContext";
+import { getTokenAfterSignIn } from "@/api/auth";
 
-type SignInProps = {
-  switchToSignUp: () => void;
-};
+const SignIn: React.FC = () => {
+  const { setToken } = useAuth();
+  const navigate: NavigateFunction = useNavigate();
 
-const SignIn: React.FC<SignInProps> = ({ switchToSignUp }) => {
-  const navigate = useNavigate();
-  const { updateUser } = useAuth();
-  const [formData, setFormData] = useState<UserSignIn>({
-    username: "",
+  const [formData, setFormData] = useState({
+    email: "",
     password: "",
   });
   const [error, setError] = useState<string>("");
@@ -25,70 +23,75 @@ const SignIn: React.FC<SignInProps> = ({ switchToSignUp }) => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
     try {
-      const { data } = await axios.post("/auth/token", formData);
-      updateUser(data.user);
-      localStorage.setItem("token", data.token);
+      const token = await getTokenAfterSignIn(formData);
+      setToken(token);
       navigate("/");
-    } catch (error) {
-      if (axios.isAxiosError(error) && error.response) {
-        console.error(
-          "Request failed with status code:",
-          error.response.status
-        );
-        setError("Invalid credentials");
-      } else {
-        setError("An unexpected error occurred");
-      }
+    } catch (err: AxiosError | any) {
+      setError(err.response.data.error);
     }
   };
 
+  const switchToSignUp = () => {
+    navigate("/sign-up");
+  };
+
   return (
-    <div className="mr-6 w-96 flex flex-col pl-10 pt-10 pr-10 pb-3 justify-center bg-secondary gap-5 rounded-md border border-primary text-primary shadow-md">
-      <h1 className="font-heading2 font-bold text-4xl mb-2 text-primary cursor-default">
+    <div className="mt-20 w-full max-w-md space-y-6 rounded-md border p-8 shadow-md dark:border-border dark:bg-secondary dark:text-quaternary">
+      <h1 className="mb-4 text-3xl font-bold dark:text-quaternary">
         Hello,
         <br />
         Welcome Back
       </h1>
 
-      <form className="flex flex-col gap-5 w-full" onSubmit={handleSubmit}>
-        <Input
-          label="Username"
-          value={formData.username}
-          type="text"
-          name="username"
-          placeholder="musk"
-          required
-          onChange={handleChange}
-        />
+      <form className="space-y-4" onSubmit={handleSubmit}>
+        <div>
+          <Input
+            label="Email"
+            value={formData.email}
+            type="email"
+            name="email"
+            placeholder="example@gmail.com"
+            required
+            onChange={handleChange}
+          />
+        </div>
 
-        <Input
-          label="Password"
-          value={formData.password}
-          type="password"
-          name="password"
-          placeholder="********"
-          required
-          onChange={handleChange}
-        />
+        <div>
+          <Input
+            label="Password"
+            value={formData.password}
+            type="password"
+            name="password"
+            placeholder="********"
+            required
+            onChange={handleChange}
+          />
+        </div>
 
         {error && <div className="text-center text-red-600">{error}</div>}
-        <div className="w-100 text-center text-sm italic font-light text-primary cursor-default">
+
+        {
+          //TODO: Add forgot password functionality
+        }
+        <div className="text-center text-sm font-light italic dark:text-quaternary">
           Forgot password? Me too.
         </div>
-        <button
-          className="text-secondary w-full bg-primary rounded p-2 shadow-lg active:shadow-none"
-          type="submit"
-        >
+
+        <Button type="submit" variant="green" className="w-full">
           Sign in
-        </button>
+        </Button>
       </form>
-      <div className="w-full">
+
+      <div className="text-center">
         Don't have an account?{" "}
-        <button className="font-semibold" onClick={switchToSignUp}>
+        <Button
+          variant="link"
+          className="pl-0 font-semibold"
+          onClick={switchToSignUp}
+        >
           Sign up
-        </button>
+        </Button>
       </div>
     </div>
   );

@@ -1,27 +1,34 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: ["class"],
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
-      colors: {
-        primary: "#000000",
-        secondary: "#ffffff",
-        ternery: "#007713",
-        bg_green: "#a1e57e",
-      },
-      backgroundImage: {
-        "about-image": "url('/src/assets/images/About_bg.jpg')",
-        "signin-image": "url('/src/assets/images/signin_bg.png')",
-      },
       fontFamily: {
-        heading: ["Bricolage Grotesque"],
-        roboto: ["Roboto"],
-        sans: ["Roboto"],
+        "jet-brains-mono": ["JetBrains Mono", "sans-serif"],
       },
-      inset: {
-        "2/10": "20%",
+      colors: {
+        primary: "#010409",
+        secondary: "#0d1117",
+        tertiary: "#151b23",
+        quaternary: "#e5e7eb",
+        border: "#2f353d",
+      },
+      keyframes: {
+        "caret-blink": {
+          "0%, 70%, 100%": { opacity: 1 },
+          "20%, 50%": { opacity: 0 },
+        },
+      },
+      animation: {
+        "caret-blink": "caret-blink 1.25s ease-out infinite",
+      },
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
       },
     },
   },
-  plugins: [],
+  plugins: [require("tailwindcss-animate")],
 };
