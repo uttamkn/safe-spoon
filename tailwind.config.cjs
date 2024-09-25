@@ -4,6 +4,9 @@ module.exports = {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      fontFamily: {
+        "jet-brains-mono": ["JetBrains Mono", "sans-serif"],
+      },
       colors: {
         primary: "#010409",
         secondary: "#0d1117",

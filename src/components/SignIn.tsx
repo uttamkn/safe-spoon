@@ -37,7 +37,7 @@ const SignIn: React.FC = () => {
   };
 
   return (
-    <div className="mx-auto mt-20 w-full max-w-md space-y-6 rounded-md border p-6 shadow-md dark:border-border dark:bg-secondary dark:text-quaternary">
+    <div className="mt-20 w-full max-w-md space-y-6 rounded-md border p-8 shadow-md dark:border-border dark:bg-secondary dark:text-quaternary">
       <h1 className="mb-4 text-3xl font-bold dark:text-quaternary">
         Hello,
         <br />

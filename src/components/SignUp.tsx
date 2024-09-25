@@ -124,7 +124,7 @@ const SignUp: React.FC = () => {
   };
 
   return (
-    <div className="mx-auto mt-10 max-w-xl space-y-6 rounded-md border p-6 shadow-md dark:border-border dark:bg-secondary dark:text-quaternary">
+    <div className="max-w-xl space-y-6 rounded-md border p-8 shadow-md dark:border-border dark:bg-secondary dark:text-quaternary">
       <h1 className="text-3xl font-bold">Register Now</h1>
 
       <form className="space-y-4" onSubmit={handleSubmit}>
@@ -132,7 +132,7 @@ const SignUp: React.FC = () => {
           label="Username"
           type="text"
           name="username"
-          placeholder="Elon"
+          placeholder="John Doe"
           value={formData.username}
           onChange={handleChange}
           required
@@ -148,37 +148,12 @@ const SignUp: React.FC = () => {
           required
         />
 
-        <div>
-          <label htmlFor="allergies" className="block text-sm font-medium">
-            Allergies
-          </label>
-          <div className="mt-2 flex items-center gap-2">
-            <Input
-              type="text"
-              name="allergies"
-              placeholder="e.g., peanuts, gluten"
-              value={allergyInput}
-              onChange={(e) => setAllergyInput(e.target.value)}
-            />
-            <Button onClick={handleAddAllergy} variant="green" type="button">
-              Add
-            </Button>
-          </div>
-          <div className="mt-2 flex flex-wrap gap-2">
-            {formData.allergies.map((allergy) => (
-              <Badge key={allergy} onClick={() => handleRemoveAllergy(allergy)}>
-                {allergy}
-              </Badge>
-            ))}
-          </div>
-        </div>
-
         <div className="flex gap-5">
           <Input
             label="Password"
             type="password"
             name="password"
-            placeholder="Must be at least 8 characters"
+            placeholder="min 8 characters"
             pattern=".{8,}"
             value={formData.password}
             onChange={handleChange}
@@ -189,32 +164,11 @@ const SignUp: React.FC = () => {
             label="Confirm Password"
             type="password"
             name="confirm_password"
-            placeholder="Must match the password"
+            placeholder="you sure?"
             value={formData.confirm_password}
             onChange={handleChange}
             required
           />
-        </div>
-
-        <div>
-          <label htmlFor="gender" className="block text-sm font-medium">
-            Gender
-          </label>
-          <Select
-            value={formData.gender}
-            onValueChange={(value) =>
-              setFormData((prev) => ({ ...prev, gender: value }))
-            }
-            required
-          >
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Gender" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="male">Male</SelectItem>
-              <SelectItem value="female">Female</SelectItem>
-            </SelectContent>
-          </Select>
         </div>
 
         <div className="flex gap-5">
@@ -240,6 +194,51 @@ const SignUp: React.FC = () => {
         </div>
 
         <div>
+          <Select
+            value={formData.gender}
+            onValueChange={(value) =>
+              setFormData((prev) => ({ ...prev, gender: value }))
+            }
+            required
+          >
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Gender" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="male">Male</SelectItem>
+              <SelectItem value="female">Female</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+        <div>
+          <label htmlFor="allergies" className="block text-sm font-medium">
+            Allergies
+          </label>
+          <div className="mt-2 flex items-center gap-2">
+            <Input
+              type="text"
+              name="allergies"
+              placeholder="e.g., peanuts, gluten"
+              value={allergyInput}
+              onChange={(e) => setAllergyInput(e.target.value)}
+            />
+            <Button onClick={handleAddAllergy} variant="green" type="button">
+              Add
+            </Button>
+          </div>
+          <div className="mt-2 flex flex-wrap gap-2">
+            {formData.allergies.map((allergy) => (
+              <Badge
+                key={allergy}
+                variant="safe"
+                onClick={() => handleRemoveAllergy(allergy)}
+              >
+                {allergy}
+              </Badge>
+            ))}
+          </div>
+        </div>
+        <div>
           <label htmlFor="diseases" className="block text-sm font-medium">
             Diseases
           </label>
@@ -257,7 +256,11 @@ const SignUp: React.FC = () => {
           </div>
           <div className="mt-2 flex flex-wrap gap-2">
             {formData.diseases.map((disease) => (
-              <Badge key={disease} onClick={() => handleRemoveDisease(disease)}>
+              <Badge
+                variant="safe"
+                key={disease}
+                onClick={() => handleRemoveDisease(disease)}
+              >
                 {disease}
               </Badge>
             ))}
