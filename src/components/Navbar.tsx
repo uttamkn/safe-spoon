@@ -9,7 +9,7 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <nav className="px-12 pb-4 pt-6 font-jet-brains-mono text-lg dark:bg-primary dark:text-quaternary">
+    <nav className="p-6 font-jet-brains-mono text-lg dark:bg-primary dark:text-quaternary">
       <div className="mx-auto flex items-center">
         <div className="w-full text-2xl font-bold">
           <NavLink to="/">Safe Spoon</NavLink>
