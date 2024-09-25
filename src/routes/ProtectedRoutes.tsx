@@ -2,10 +2,11 @@ import { useAuth } from "@/context/AuthContext";
 import { Navigate, Outlet } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { Loader } from "lucide-react";
 
 const isTokenValid = async (token: string): Promise<boolean> => {
   try {
-    const response = await axios.get("/api/auth/user", {
+    const response = await axios.get("/api/auth/verify-user", {
       headers: { Authorization: `Bearer ${token}` },
     });
     return response.status === 200;
@@ -35,7 +36,11 @@ const ProtectedRoutes = () => {
   }, [token]);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex min-h-full items-center justify-center dark:bg-primary">
+        <Loader size={64} className="animate-spin" />
+      </div>
+    );
   }
 
   if (!isValid) {

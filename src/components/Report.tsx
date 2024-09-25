@@ -29,9 +29,11 @@ const Report: FC<ReportProps> = ({ report }) => {
           </div>
         )
       ) : (
-        <div className="flex h-full w-full flex-col items-center justify-center">
+        <div className="flex h-full w-full flex-col items-center justify-center gap-4">
           <XCircle className="h-16 w-16 text-red-500 md:h-32 md:w-32" />
-          <p className="text-3xl font-semibold text-red-600">Invalid input</p>
+          <p className="text-3xl font-semibold text-red-600">
+            Invalid input try submitting again.
+          </p>
         </div>
       )}
 
