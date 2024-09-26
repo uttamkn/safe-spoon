@@ -34,7 +34,7 @@ const ProfilePage = () => {
   }
 
   return (
-    <div className="flex min-h-full items-center justify-center p-6 font-jet-brains-mono dark:bg-primary">
+    <div className="flex min-h-full items-center justify-center p-6 font-roboto dark:bg-primary">
       {isEditing ? (
         <EditProfile user={user} switchToProfile={switchToProfile} />
       ) : (

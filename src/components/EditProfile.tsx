@@ -1,5 +1,6 @@
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { useToast } from "@/hooks/use-toast";
 import {
   Select,
   SelectContent,
@@ -19,6 +20,7 @@ type EditProfileProps = {
 };
 
 const EditProfile: FC<EditProfileProps> = ({ user, switchToProfile }) => {
+  const { toast } = useToast();
   const [formData, setFormData] = useState<UserT>({
     username: user.username,
     email: user.email,
@@ -82,6 +84,7 @@ const EditProfile: FC<EditProfileProps> = ({ user, switchToProfile }) => {
     try {
       await updateUserData(formData);
       switchToProfile();
+      toast({ description: "Profile was updated successfully" });
     } catch (err) {
       console.error(err);
     }
