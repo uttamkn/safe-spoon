@@ -5,7 +5,7 @@ const HeroPage = () => {
         <h1 className="text-5xl font-bold dark:text-quaternary sm:text-6xl">
           Welcome to <span className="text-green-600">Safe Spoon</span>
         </h1>
-        <p className="text-lg dark:text-quaternary sm:text-xl">
+        <p className="font-roboto text-lg dark:text-quaternary sm:text-xl">
           Safeguard your meals by checking ingredients based on your health
           factors.
         </p>

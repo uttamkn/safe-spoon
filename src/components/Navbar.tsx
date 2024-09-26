@@ -9,7 +9,7 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <nav className="p-6 font-jet-brains-mono text-lg dark:bg-primary dark:text-quaternary">
+    <nav className="p-6 font-roboto text-lg dark:bg-primary dark:text-quaternary">
       <div className="mx-auto flex items-center">
         <div className="w-full text-2xl font-bold">
           <NavLink to="/">Safe Spoon</NavLink>
@@ -35,7 +35,7 @@ const Navbar = () => {
                     : "hover:text-indigo-600 hover:underline dark:text-quaternary"
                 }
               >
-                Sign In
+                Login
               </NavLink>
               <NavLink
                 to="/sign-up"
@@ -45,7 +45,7 @@ const Navbar = () => {
                     : "hover:text-indigo-600 hover:underline dark:text-quaternary"
                 }
               >
-                Sign Up
+                Register
               </NavLink>
               <ModeToggle />
             </>
