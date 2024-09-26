@@ -77,9 +77,7 @@ const Profile: FC<ProfileProps> = ({ user, switchToEditProfile }) => {
             <div className="mt-1 flex flex-wrap gap-2">
               {user.diseases.length > 0 ? (
                 user.diseases.map((disease, index) => (
-                  <Badge key={index} className="dark:bg-gray-800">
-                    {disease}
-                  </Badge>
+                  <Badge key={index}>{disease}</Badge>
                 ))
               ) : (
                 <p className="text-gray-500 dark:text-gray-400">No diseases</p>

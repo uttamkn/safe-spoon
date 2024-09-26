@@ -63,7 +63,7 @@ const Navbar = () => {
               </NavLink>
               <div
                 onClick={() => setToken(null)}
-                className="cursor-pointer font-medium hover:underline dark:text-quaternary"
+                className="cursor-pointer hover:text-indigo-600 hover:underline dark:text-quaternary"
               >
                 Logout
               </div>
