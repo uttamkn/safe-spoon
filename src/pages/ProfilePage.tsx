@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { fetchUserData } from "@/api/profile";
 import { UserT } from "@/types";
-import Profile from "@/components/Profile";
-import EditProfile from "@/components/EditProfile";
+import Profile from "@/components/profileComponents/Profile";
+import EditProfile from "@/components/profileComponents/EditProfile";
 import { Loader } from "lucide-react";
 
 const ProfilePage = () => {

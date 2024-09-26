@@ -1,5 +1,5 @@
-import { Input } from "./ui/input";
-import { Button } from "./ui/button";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
 import { ChangeEvent, useState } from "react";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 import { AxiosError } from "axios";

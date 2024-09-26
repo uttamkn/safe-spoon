@@ -1,7 +1,7 @@
 import { useState } from "react";
-import ImageInput from "@/components/ImageInput";
-import Report from "@/components/Report";
-import NoReport from "@/components/NoReport";
+import ImageInput from "@/components/homeComponents/ImageInput";
+import Report from "@/components/homeComponents/Report";
+import NoReport from "@/components/errorComponents/NoReport";
 import { ReportT } from "@/types";
 import { Loader } from "lucide-react";
 

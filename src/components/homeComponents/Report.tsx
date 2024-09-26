@@ -1,9 +1,9 @@
 import { FC } from "react";
-import { ReportT } from "../types";
+import { ReportT } from "../../types";
 import { AlertCircle, CheckCircle, XCircle } from "lucide-react";
-import { ScrollArea } from "./ui/scroll-area";
+import { ScrollArea } from "../ui/scroll-area";
 import IngredientCard from "./IngredientCard";
-import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
+import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 
 type ReportProps = {
   report: ReportT;
