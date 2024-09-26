@@ -14,6 +14,7 @@ import {
   SelectTrigger,
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
+import { Mail, User, Lock, Calendar, AlertCircle, Weight } from "lucide-react";
 
 type SignUpFormT = UserT & { confirm_password: string };
 
@@ -40,6 +41,7 @@ const SignUp: React.FC = () => {
     target: { name, value },
   }: ChangeEvent<HTMLInputElement>) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
+    setError("");
   };
 
   const handleAddAllergy = () => {
@@ -79,7 +81,6 @@ const SignUp: React.FC = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    // Form validation
     if (formData.password !== formData.confirm_password) {
       setError("Passwords do not match");
       return;
@@ -107,7 +108,6 @@ const SignUp: React.FC = () => {
 
     try {
       await sendEmail(data.email);
-
       toast({
         title: "Email sent",
         description: "An OTP has been sent to your email",
@@ -115,7 +115,9 @@ const SignUp: React.FC = () => {
       localStorage.setItem("sign-up-data", JSON.stringify(data));
       navigate("/sign-up/verify");
     } catch (err: AxiosError | any) {
-      setError(err.response.data.error);
+      setError(
+        err.response?.data.error || "Something went wrong. Please try again.",
+      );
     }
   };
 
@@ -124,76 +126,131 @@ const SignUp: React.FC = () => {
   };
 
   return (
-    <div className="max-w-xl space-y-6 rounded-md border p-8 shadow-md dark:border-border dark:bg-secondary dark:text-quaternary">
+    <div className="max-w-xl space-y-6 rounded-lg border p-8 shadow-md dark:border-border dark:bg-secondary dark:text-quaternary">
       <h1 className="text-3xl font-bold">Register Now</h1>
 
-      <form className="space-y-4" onSubmit={handleSubmit}>
-        <Input
-          label="Username"
-          type="text"
-          name="username"
-          placeholder="John Doe"
-          value={formData.username}
-          onChange={handleChange}
-          required
-        />
-
-        <Input
-          label="Email"
-          type="email"
-          name="email"
-          placeholder="example@gmail.com"
-          value={formData.email}
-          onChange={handleChange}
-          required
-        />
-
-        <div className="flex gap-5">
-          <Input
-            label="Password"
-            type="password"
-            name="password"
-            placeholder="min 8 characters"
-            pattern=".{8,}"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
-
-          <Input
-            label="Confirm Password"
-            type="password"
-            name="confirm_password"
-            placeholder="you sure?"
-            value={formData.confirm_password}
-            onChange={handleChange}
-            required
-          />
+      <form
+        className="grid grid-cols-1 gap-6 sm:grid-cols-2"
+        onSubmit={handleSubmit}
+      >
+        <div className="col-span-1 sm:col-span-2">
+          <label htmlFor="username" className="mb-1 block text-sm font-medium">
+            Username
+          </label>
+          <div className="relative">
+            <Input
+              id="username"
+              value={formData.username}
+              type="text"
+              name="username"
+              placeholder="John Doe"
+              required
+              onChange={handleChange}
+              className={`pl-10 ${error && "border-red-500 dark:border-red-500"}`}
+            />
+            <User className="absolute left-2.5 top-2.5 h-5 w-5 text-gray-400" />
+          </div>
         </div>
 
-        <div className="flex gap-5">
-          <Input
-            label="Age"
-            type="number"
-            name="age"
-            placeholder="Age"
-            value={formData.age}
-            onChange={handleChange}
-            required
-          />
-
-          <Input
-            label="Weight"
-            type="number"
-            name="weight"
-            placeholder="Weight in kg"
-            value={formData.weight}
-            onChange={handleChange}
-            required
-          />
+        <div className="col-span-1 sm:col-span-2">
+          <label htmlFor="email" className="mb-1 block text-sm font-medium">
+            Email
+          </label>
+          <div className="relative">
+            <Input
+              id="email"
+              value={formData.email}
+              type="email"
+              name="email"
+              placeholder="example@gmail.com"
+              required
+              onChange={handleChange}
+              className={`pl-10 ${error && "border-red-500 dark:border-red-500"}`}
+            />
+            <Mail className="absolute left-2.5 top-2.5 h-5 w-5 text-gray-400" />
+          </div>
         </div>
 
         <div>
+          <label htmlFor="password" className="mb-1 block text-sm font-medium">
+            Password
+          </label>
+          <div className="relative">
+            <Input
+              id="password"
+              value={formData.password}
+              type="password"
+              name="password"
+              placeholder="********"
+              required
+              onChange={handleChange}
+              className={`pl-10 ${error && "border-red-500 dark:border-red-500"}`}
+            />
+            <Lock className="absolute left-2.5 top-2.5 h-5 w-5 text-gray-400" />
+          </div>
+        </div>
+
+        <div>
+          <label
+            htmlFor="confirm_password"
+            className="mb-1 block text-sm font-medium"
+          >
+            Confirm Password
+          </label>
+          <div className="relative">
+            <Input
+              id="confirm_password"
+              value={formData.confirm_password}
+              type="password"
+              name="confirm_password"
+              placeholder="********"
+              required
+              onChange={handleChange}
+              className={`pl-10 ${error && "border-red-500 dark:border-red-500"}`}
+            />
+            <Lock className="absolute left-2.5 top-2.5 h-5 w-5 text-gray-400" />
+          </div>
+        </div>
+
+        <div>
+          <label htmlFor="age" className="mb-1 block text-sm font-medium">
+            Age
+          </label>
+          <div className="relative">
+            <Input
+              id="age"
+              value={formData.age}
+              type="number"
+              name="age"
+              placeholder="Age"
+              required
+              onChange={handleChange}
+              className={`pl-10 ${error && "border-red-500 dark:border-red-500"}`}
+            />
+            <Calendar className="absolute left-2.5 top-2.5 h-5 w-5 text-gray-400" />
+          </div>
+        </div>
+
+        <div>
+          <label htmlFor="weight" className="mb-1 block text-sm font-medium">
+            Weight
+          </label>
+          <div className="relative">
+            <Input
+              id="weight"
+              value={formData.weight}
+              type="number"
+              name="weight"
+              placeholder="Weight in kg"
+              required
+              onChange={handleChange}
+              className={`pl-10 ${error && "border-red-500 dark:border-red-500"}`}
+            />
+            <Weight className="absolute left-2.5 top-2.5 h-5 w-5 text-gray-400" />
+          </div>
+        </div>
+
+        <div className="col-span-1 sm:col-span-2">
           <Select
             value={formData.gender}
             onValueChange={(value) =>
@@ -201,7 +258,7 @@ const SignUp: React.FC = () => {
             }
             required
           >
-            <SelectTrigger className="w-[180px]">
+            <SelectTrigger className="w-full">
               <SelectValue placeholder="Gender" />
             </SelectTrigger>
             <SelectContent>
@@ -210,11 +267,12 @@ const SignUp: React.FC = () => {
             </SelectContent>
           </Select>
         </div>
-        <div>
-          <label htmlFor="allergies" className="block text-sm font-medium">
+
+        <div className="col-span-1 sm:col-span-2">
+          <label htmlFor="allergies" className="mb-1 block text-sm font-medium">
             Allergies
           </label>
-          <div className="mt-2 flex items-center gap-2">
+          <div className="flex items-center gap-2">
             <Input
               type="text"
               name="allergies"
@@ -238,11 +296,12 @@ const SignUp: React.FC = () => {
             ))}
           </div>
         </div>
-        <div>
-          <label htmlFor="diseases" className="block text-sm font-medium">
+
+        <div className="col-span-1 sm:col-span-2">
+          <label htmlFor="diseases" className="mb-1 block text-sm font-medium">
             Diseases
           </label>
-          <div className="mt-2 flex items-center gap-2">
+          <div className="flex items-center gap-2">
             <Input
               type="text"
               name="diseases"
@@ -257,8 +316,8 @@ const SignUp: React.FC = () => {
           <div className="mt-2 flex flex-wrap gap-2">
             {formData.diseases.map((disease) => (
               <Badge
-                variant="safe"
                 key={disease}
+                variant="safe"
                 onClick={() => handleRemoveDisease(disease)}
               >
                 {disease}
@@ -267,9 +326,18 @@ const SignUp: React.FC = () => {
           </div>
         </div>
 
-        {error && <div className="text-center text-red-600">{error}</div>}
+        {error && (
+          <div className="col-span-1 mt-4 flex items-center text-red-600 sm:col-span-2">
+            <AlertCircle className="mr-2 h-5 w-5" />
+            <span>{error}</span>
+          </div>
+        )}
 
-        <Button type="submit" variant="green" className="w-full">
+        <Button
+          type="submit"
+          variant="green"
+          className="col-span-1 w-full sm:col-span-2"
+        >
           Sign Up
         </Button>
       </form>
