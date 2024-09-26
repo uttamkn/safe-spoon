@@ -6,6 +6,7 @@ module.exports = {
     extend: {
       fontFamily: {
         "jet-brains-mono": ["JetBrains Mono", "sans-serif"],
+        roboto: ["Roboto", "sans-serif"],
       },
       colors: {
         primary: "#010409",
