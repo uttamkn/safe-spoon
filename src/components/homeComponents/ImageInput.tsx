@@ -29,9 +29,19 @@ const ImageInput: FC<ImageInputProps> = ({ setReport, setLoading }) => {
     if (image) {
       setReport(null);
       setLoading(true);
-      const report: ReportT = await getReport(image);
-      setReport(report);
-      setLoading(false);
+      try {
+        const report: ReportT = await getReport(image);
+        setReport(report);
+      } catch (error) {
+        console.error("Error processing image:", error);
+        toast({
+          variant: "destructive",
+          title: "Image Processing Error",
+          description: "An error occurred while processing the image",
+        });
+      } finally {
+        setLoading(false);
+      }
     } else {
       toast({
         variant: "destructive",
