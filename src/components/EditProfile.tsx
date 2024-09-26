@@ -11,8 +11,9 @@ import {
 import { Button } from "@/components/ui/button";
 import { UserT } from "@/types";
 import { FC, useState } from "react";
-import { X, PlusIcon, Repeat as Undo, MoveLeft } from "lucide-react";
+import { X, PlusIcon, Repeat as Undo } from "lucide-react";
 import { updateUserData } from "@/api/profile";
+import { UpdatePasswordDialog } from "./UpdatePassword";
 
 type EditProfileProps = {
   user: UserT;
@@ -93,10 +94,13 @@ const EditProfile: FC<EditProfileProps> = ({ user, switchToProfile }) => {
   return (
     <Card className="relative rounded-lg border px-6 py-4 dark:border-border dark:bg-secondary">
       <CardHeader>
-        <MoveLeft
+        <Button
+          variant="link"
           onClick={switchToProfile}
-          className="absolute left-5 top-5 cursor-pointer"
-        />
+          className="absolute left-2 top-2 cursor-pointer"
+        >
+          Go back
+        </Button>
         <div className="flex w-full justify-between pt-6">
           <CardTitle className="text-xl font-semibold dark:text-quaternary">
             Edit Profile
@@ -169,9 +173,9 @@ const EditProfile: FC<EditProfileProps> = ({ user, switchToProfile }) => {
                 className="flex-grow"
               />
               <Button
-                variant="destructive"
+                variant="outline"
                 onClick={() => removeArrayItem("allergies", index)}
-                className="p-1"
+                className="border border-red-500 text-red-500 hover:text-red-600 dark:border-red-900 dark:text-red-900 dark:hover:text-red-700"
               >
                 <X className="h-4 w-4" />
               </Button>
@@ -196,9 +200,9 @@ const EditProfile: FC<EditProfileProps> = ({ user, switchToProfile }) => {
                 className="flex-grow"
               />
               <Button
-                variant="destructive"
+                variant="outline"
                 onClick={() => removeArrayItem("diseases", index)}
-                className="p-1"
+                className="border border-red-500 text-red-500 hover:text-red-600 dark:border-red-900 dark:text-red-900 dark:hover:text-red-700"
               >
                 <X className="h-4 w-4" />
               </Button>
@@ -213,6 +217,9 @@ const EditProfile: FC<EditProfileProps> = ({ user, switchToProfile }) => {
           </Button>
         </div>
 
+        <div className="flex w-full justify-center pt-6">
+          <UpdatePasswordDialog />
+        </div>
         <Button onClick={handleSubmit} variant="green" className="mt-6 w-full">
           Update Profile
         </Button>
