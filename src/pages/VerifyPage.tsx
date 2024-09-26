@@ -11,7 +11,7 @@ import {
 import { REGEXP_ONLY_DIGITS } from "input-otp";
 import { Mail } from "lucide-react";
 import { AxiosError } from "axios";
-import { getTokenAfterSignUp, verifyEmail } from "@/api/auth";
+import { getTokenAfterSignUp, verifyOtpEmail } from "@/api/auth";
 import { useAuth } from "@/context/AuthContext";
 
 const VerifyPage = () => {
@@ -23,7 +23,7 @@ const VerifyPage = () => {
   const handleOtpSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      await verifyEmail(parseInt(otp));
+      await verifyOtpEmail(parseInt(otp));
       console.log("Email verified");
 
       const data = localStorage.getItem("sign-up-data");

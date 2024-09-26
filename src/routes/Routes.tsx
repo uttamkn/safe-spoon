@@ -10,6 +10,8 @@ import NotFoundPage from "@/components/errorComponents/404";
 import NavbarLayout from "@/pages/NavbarLayout";
 import SignInPage from "@/pages/SignInPage";
 import SignUpPage from "@/pages/SignUpPage";
+import ResetPasswordPage from "@/pages/ResetPasswordPage";
+import ForgotPasswordPage from "@/pages/ForgotPasswordPage";
 
 const Routes = () => {
   const { token } = useAuth();
@@ -39,6 +41,14 @@ const Routes = () => {
     {
       path: "/sign-in",
       element: <SignInPage />,
+    },
+    {
+      path: "/sign-in/reset-password",
+      element: <ForgotPasswordPage />,
+    },
+    {
+      path: "/sign-in/reset-password/:token",
+      element: <ResetPasswordPage />,
     },
     {
       path: "/sign-up",

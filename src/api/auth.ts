@@ -1,7 +1,7 @@
 import { UserT } from "@/types";
 import axios from "axios";
 
-export const sendEmail = async (email: string): Promise<void> => {
+export const sendOtpEmail = async (email: string): Promise<void> => {
   try {
     await axios.put("/api/auth/send-email-verification", { email });
     console.log("Email sent");
@@ -10,7 +10,7 @@ export const sendEmail = async (email: string): Promise<void> => {
   }
 };
 
-export const verifyEmail = async (code: number): Promise<void> => {
+export const verifyOtpEmail = async (code: number): Promise<void> => {
   try {
     await axios.delete("/api/auth/verify-email", {
       data: {
@@ -35,4 +35,21 @@ export const getTokenAfterSignIn = async (data: {
 }): Promise<string> => {
   const res = await axios.post("/api/auth/sign-in", data);
   return res.data.token;
+};
+
+export const sendForgotPasswordEmail = async (
+  email: string,
+): Promise<string> => {
+  const res = await axios.post("/api/auth/forgot-password", { email });
+  return res.data.message;
+};
+
+export const resetPassword = async (
+  password: string,
+  token: string,
+): Promise<string> => {
+  const res = await axios.put(`/api/auth/reset-password/${token}`, {
+    password,
+  });
+  return res.data.message;
 };

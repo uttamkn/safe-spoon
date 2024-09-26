@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, FC, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
@@ -7,7 +7,7 @@ import { useAuth } from "@/context/AuthContext";
 import { getTokenAfterSignIn } from "@/api/auth";
 import { Mail, Lock, AlertCircle } from "lucide-react";
 
-const SignIn: React.FC = () => {
+const SignIn: FC = () => {
   const { setToken } = useAuth();
   const navigate = useNavigate();
 
@@ -30,7 +30,7 @@ const SignIn: React.FC = () => {
       setToken(token);
       navigate("/");
     } catch (err: AxiosError | any) {
-      setError(err.response?.data.message || "Something went wrong.");
+      setError(err.response?.data.error || "Something went wrong.");
     }
   };
 
@@ -86,6 +86,7 @@ const SignIn: React.FC = () => {
             variant="link"
             type="button"
             className="text-sm font-light italic text-gray-500 dark:text-quaternary"
+            onClick={() => navigate("/sign-in/reset-password")}
           >
             Forgot password?
           </Button>

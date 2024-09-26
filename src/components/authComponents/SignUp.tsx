@@ -4,7 +4,7 @@ import { ChangeEvent, useState } from "react";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 import { AxiosError } from "axios";
 import { UserT } from "@/types";
-import { sendEmail } from "@/api/auth";
+import { sendOtpEmail } from "@/api/auth";
 import { useToast } from "@/hooks/use-toast";
 import {
   Select,
@@ -107,7 +107,7 @@ const SignUp: React.FC = () => {
     const { confirm_password, ...data } = formData;
 
     try {
-      await sendEmail(data.email);
+      await sendOtpEmail(data.email);
       toast({
         title: "Email sent",
         description: "An OTP has been sent to your email",
