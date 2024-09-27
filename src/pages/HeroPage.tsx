@@ -10,17 +10,15 @@ const HeroPage = () => {
           factors.
         </p>
 
-        <div className="flex h-72 w-full items-center justify-center rounded-lg border border-border bg-secondary sm:h-80">
-          <video
-            className="h-full min-w-full"
-            autoPlay
-            loop
-            muted
-            playsInline
-            poster="/hero-placeholder.png"
-            src="/hero.mp4"
-          ></video>
-        </div>
+        <video
+          className="h-full min-w-full rounded-lg border dark:border-border"
+          autoPlay
+          loop
+          muted
+          playsInline
+          poster="/hero-placeholder.png"
+          src="/hero.mp4"
+        ></video>
       </div>
     </div>
   );
