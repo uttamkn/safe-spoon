@@ -2,6 +2,8 @@
 
 Safe Spoon is a web application designed to help users determine if a food product is safe to consume based on their personal health factors. By uploading an image of the food or its ingredient list and specifying allergies, age, weight, gender, and other health information, users receive immediate feedback on potential health risks.
 
+https://github.com/user-attachments/assets/be8a4f12-7226-4621-a6c8-59775a5df2f4
+
 ## Features
 
 - **Authentication with Gmail Verification**: Secure user authentication with Gmail verification through OTP and support for forgot password functionality.
